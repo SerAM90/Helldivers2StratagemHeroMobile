@@ -1,4 +1,4 @@
-package com.example.helldivers2_stratagemheromobile
+package com.cs467.helldivers2_stratagemheromobile
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.helldivers2_stratagemheromobile", appContext.packageName)
+        assertEquals("com.cs467.helldivers2_stratagemheromobile", appContext.packageName)
     }
 }

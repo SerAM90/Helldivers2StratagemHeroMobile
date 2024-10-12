@@ -1,4 +1,4 @@
-package com.example.helldivers2_stratagemheromobile
+package com.cs467.helldivers2_stratagemheromobile
 
 import org.junit.Test
 
