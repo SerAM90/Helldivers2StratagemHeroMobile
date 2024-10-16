@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Helldivers 2- Stratagem Hero Mobile</string>
+    <string name="title_start_screen">Stratagem Hero</string>
+    <string name="start_screen_instructions">Enter any Stratagem to Start!</string>
+    <string name="get_ready">Get Ready</string>
+    <string name="round">Round</string>
+    <sting name="score">Score</sting>
+    <string name="time_bonus">Time Bonus</string>
+    <string name="round_bonus">Round Bonus</string>
+    <string name="perfect_bonus">Perfect Bonus</string>
+    <string name="total_score">Total Score</string>
+    <string name="game_over">GAME OVER</string>
+    <string name="high_scores">HIGH SCORES</string>
+    <string name="your_final_score">YOUR FINAL SCORE</string>
 </resources>
