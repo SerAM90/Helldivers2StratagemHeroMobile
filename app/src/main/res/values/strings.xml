@@ -12,4 +12,9 @@
     <string name="game_over">GAME OVER</string>
     <string name="high_scores">HIGH SCORES</string>
     <string name="your_final_score">YOUR FINAL SCORE</string>
+    <string name="hellbomb">Hellbomb</string>
+    <string name="eagle500k">Eagle 500k Bomb</string>
+    <string name="arcthrower">Arc Thrower</string>
+    <string name="flamethrower">Flamethrower</string>
+    <string name="eaglerearm">Eagle Rearm</string>
 </resources>
