@@ -2,6 +2,18 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="AfterRoundScreen">
+        <State />
+      </entry>
+      <entry key="GameOverScreenPreview">
+        <State />
+      </entry>
+      <entry key="ReadyScreenPreview">
+        <State />
+      </entry>
+      <entry key="StartingScreenPreview">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
