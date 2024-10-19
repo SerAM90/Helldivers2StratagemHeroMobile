@@ -37,6 +37,7 @@ fun StartingScreen(
                 text = instructions,
                 fontSize = 30.sp
             )
+
         }
     }
 }

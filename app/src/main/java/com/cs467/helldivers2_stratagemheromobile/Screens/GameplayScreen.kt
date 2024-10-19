@@ -25,6 +25,15 @@ import com.cs467.helldivers2_stratagemheromobile.model.StratagemInput
 //2
 //SCORE with number right above
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
 @Composable
 fun StratagemDisplay(stratagem: Stratagem) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {

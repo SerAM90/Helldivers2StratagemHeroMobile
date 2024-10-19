@@ -20,42 +20,7 @@ import com.cs467.helldivers2_stratagemheromobile.R
 //4- CCC I 304930423  | <--- vertical bar lol, goes on scores between name and score
 //YOUR FINAL SCORE
 //123
-//val scorePair = Pair("PlayerName | ", 1000)
-//@Composable
-//fun GameOverScreen(gameOverDisplay: String, threeTopScores: List<Pair<String, Int>>, finalscore: Pair<String, Int>)
-//{
-//    Text(
-//        text = gameOverDisplay
-//    )
-//
-//    for (score in threeTopScores) {
-//        Text(text = "${score.first}: ${score.second}") // Format each score
-//    }
-//    Text(
-//        text = "Your Score: ${finalScore.first}: ${finalScore.second}"
-//    )
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun GameOverScreenPreview() {
-//    // Sample top scores as a list of pairs
-//    val topScores = listOf(
-//        Pair("Tater Salad | ", 1500),
-//        Pair("Pasta Salad | ", 1200),
-//        Pair("Chicken Salad | ", 900)
-//    )
-//
-//    // Sample final score
-//    val finalScore = Pair("Your Final Score | ", 200)
-//
-//    // Call the GameOverScreen with the sample data
-//    GameOverScreen(
-//        gameOverDisplay = stringResource(id = R.string.game_over),
-//        threeTopScores = topScores,
-//        finalScore = finalScore
-//    )
-//}
+
 data class Score(val playerName: String, val score: Int)
 
 @Composable
