@@ -5,9 +5,9 @@ import com.cs467.helldivers2_stratagemheromobile.model.Stratagem
 import com.cs467.helldivers2_stratagemheromobile.model.StratagemInput
 
 //63 stratagems to upload
-class StratagemDataSource(){
+open class StratagemDataSource(){
 
-    fun loadStratagems(): List<Stratagem>{
+    open fun loadStratagems(): List<Stratagem>{
         return listOf(
             Stratagem(
               stratagemName = R.string.hellbomb,

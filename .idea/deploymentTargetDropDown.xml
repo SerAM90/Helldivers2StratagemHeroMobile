@@ -8,6 +8,12 @@
       <entry key="GameOverScreenPreview">
         <State />
       </entry>
+      <entry key="GameplayScreen">
+        <State />
+      </entry>
+      <entry key="ReadyScreen">
+        <State />
+      </entry>
       <entry key="ReadyScreenPreview">
         <State />
       </entry>
