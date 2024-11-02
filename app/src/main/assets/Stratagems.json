@@ -1,0 +1,25 @@
+[
+  {
+    "stratagemName": "arcthrower",
+    "imageResourceName": "arcthrower",
+    "stratagemInputExpected": [
+      "DOWN",
+      "RIGHT",
+      "DOWN",
+      "UP",
+      "LEFT",
+      "LEFT"
+    ]
+  },
+  {
+    "stratagemName": "reinforce",
+    "imageResourceName": "reinforce",
+    "stratagemInputExpected": [
+      "UP",
+      "DOWN",
+      "RIGHT",
+      "LEFT",
+      "UP"
+    ]
+  }
+]
