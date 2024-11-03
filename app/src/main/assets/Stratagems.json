@@ -21,5 +21,676 @@
       "LEFT",
       "UP"
     ]
+  },
+  {
+    "stratagemName":"hellbomb",
+    "imageResourceName":"nux_223_hellbomb",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "LEFT",
+      "DOWN",
+      "UP",
+      "RIGHT",
+      "DOWN",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "eagle500k",
+    "imageResourceName": "eagle500kbbomb",
+    "stratagemInputExpected": ["UP",
+      "RIGHT",
+      "DOWN",
+      "DOWN",
+      "DOWN"
+    ]
+  },
+  {
+    "stratagemName": "flamethrower",
+    "imageResourceName": "flamethrower",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "UP",
+      "DOWN",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "eaglerearm",
+    "imageResourceName": "eaglerearm",
+    "stratagemInputExpected": ["UP",
+      "UP",
+      "LEFT",
+      "UP",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "airburstrocketlauncher",
+    "imageResourceName": "airburstrocketlauncher",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "UP",
+      "LEFT",
+      "RIGHT"
+
+    ]
+  }
+  ,{
+  "stratagemName": "antimaterialrifle",
+  "imageResourceName": "antimaterialrifle",
+  "stratagemInputExpected": ["DOWN",
+    "LEFT",
+    "RIGHT",
+    "UP",
+    "DOWN"
+
+  ]
+},
+  {
+    "stratagemName": "antipersonnelminefield",
+    "imageResourceName": "antipersonalminefield",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "UP",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "antitankmines",
+    "imageResourceName": "antitankmines",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "UP",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "autocannonsentry",
+    "imageResourceName": "autocannonsentry",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "RIGHT",
+      "UP",
+      "LEFT",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "ballisticshield",
+    "imageResourceName": "ballisticshield",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "DOWN",
+      "DOWN",
+      "UP",
+      "LEFT"
+
+    ]
+  },
+  {
+    "stratagemName": "commando",
+    "imageResourceName": "commando",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "UP",
+      "DOWN",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "eagle110mmrocketpods",
+    "imageResourceName": "eagle110mmrocketpods",
+    "stratagemInputExpected": ["UP",
+      "RIGHT",
+      "UP",
+      "LEFT"
+
+    ]
+  },
+  {
+    "stratagemName": "eagleairstrike",
+    "imageResourceName": "eagleairstrike",
+    "stratagemInputExpected": ["UP",
+      "RIGHT",
+      "DOWN",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "eagleclusterbomb",
+    "imageResourceName": "eagleclusterbomb",
+    "stratagemInputExpected": ["UP",
+      "RIGHT",
+      "DOWN",
+      "DOWN",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "eaglesmokestrike",
+    "imageResourceName": "eaglesmokestrike",
+    "stratagemInputExpected": ["UP",
+      "RIGHT",
+      "UP",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "eaglestrafingrun",
+    "imageResourceName": "eaglestrafingrun",
+    "stratagemInputExpected": ["UP",
+      "RIGHT",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "emancipatorexosuit",
+    "imageResourceName": "emancipatorexosuit",
+    "stratagemInputExpected": ["LEFT",
+      "DOWN",
+      "RIGHT",
+      "UP",
+      "LEFT",
+      "DOWN",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "emsmortarsentry",
+    "imageResourceName": "emsmortarsenty",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "RIGHT",
+      "DOWN",
+      "RIGHT"
+    ]
+  },
+  {
+    "stratagemName": "expendabletank",
+    "imageResourceName": "expendabletank",
+    "stratagemInputExpected": ["DOWN",
+      "DOWN",
+      "LEFT",
+      "UP",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "gatlingsentry",
+    "imageResourceName": "gatlingsentry",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "RIGHT",
+      "LEFT"
+
+    ]
+  },
+  {
+    "stratagemName": "grenadelauncher",
+    "imageResourceName": "grenadelauncher",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "UP",
+      "LEFT",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "guarddog",
+    "imageResourceName": "guarddog",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "LEFT",
+      "UP",
+      "RIGHT",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "guarddogbreath",
+    "imageResourceName": "guarddogbreath",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "LEFT",
+      "UP",
+      "RIGHT",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "guarddoglaser",
+    "imageResourceName": "guarddoglaser",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "LEFT",
+      "UP",
+      "RIGHT",
+      "RIGHT"
+    ]
+  },
+  {
+    "stratagemName": "heavymachinegun",
+    "imageResourceName": "heavymachinegun",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "UP",
+      "DOWN",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "hmgemplacement",
+    "imageResourceName": "hmgemplacement",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "LEFT",
+      "RIGHT",
+      "RIGHT",
+      "LEFT"
+
+    ]
+  },
+  {
+    "stratagemName": "incendiarymines",
+    "imageResourceName": "incendiaymines",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "LEFT",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "jumppack",
+    "imageResourceName": "jumppack",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "UP",
+      "DOWN",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "lasercannon",
+    "imageResourceName": "lasercannon",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "DOWN",
+      "UP",
+      "LEFT"
+
+    ]
+  },
+  {
+    "stratagemName": "machinegun",
+    "imageResourceName": "machinegun",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "DOWN",
+      "UP",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "machinegunsentry",
+    "imageResourceName": "machinegunsentry",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "RIGHT",
+      "RIGHT",
+      "UP"
+    ]
+  },
+  {
+    "stratagemName": "mortarsentry",
+    "imageResourceName": "mortarsentry",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "RIGHT",
+      "RIGHT",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "orbital120hebarrage",
+    "imageResourceName": "orbital120hebarrage",
+    "stratagemInputExpected": ["RIGHT",
+      "RIGHT",
+      "DOWN",
+      "LEFT",
+      "RIGHT",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "orbital380hebarrage",
+    "imageResourceName": "orbital380hebarrage",
+    "stratagemInputExpected": ["RIGHT",
+      "DOWN",
+      "UP",
+      "UP",
+      "LEFT",
+      "DOWN",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitalairburststrike",
+    "imageResourceName": "orbitalairburststrike",
+    "stratagemInputExpected": ["RIGHT",
+      "RIGHT",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitalemsstrike",
+    "imageResourceName": "orbitalemsstrike",
+    "stratagemInputExpected": ["RIGHT",
+      "RIGHT",
+      "LEFT",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitalgasstrike",
+    "imageResourceName": "orbitbalgasstrike",
+    "stratagemInputExpected": ["RIGHT",
+      "RIGHT",
+      "DOWN",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitalgatlingbarrage",
+    "imageResourceName": "orbitalgatlingbarrage",
+    "stratagemInputExpected": ["RIGHT",
+      "DOWN",
+      "LEFT",
+      "UP",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitallaser",
+    "imageResourceName": "orbitallaser",
+    "stratagemInputExpected": ["RIGHT",
+      "DOWN",
+      "UP",
+      "RIGHT",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitalnapalmbarrage",
+    "imageResourceName": "orbitalnapalmbarrage",
+    "stratagemInputExpected": ["RIGHT",
+      "RIGHT",
+      "DOWN",
+      "LEFT",
+      "RIGHT",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitalprecisionstrike",
+    "imageResourceName": "orbitalprecisionstrike",
+    "stratagemInputExpected": ["RIGHT",
+      "RIGHT",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitalsmokestrike",
+    "imageResourceName": "orbitalsmokestrike",
+    "stratagemInputExpected": ["RIGHT",
+      "RIGHT",
+      "DOWN",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitalwalkingbarrage",
+    "imageResourceName": "orbitalwalkingbarrage",
+    "stratagemInputExpected": ["RIGHT",
+      "DOWN",
+      "RIGHT",
+      "DOWN",
+      "RIGHT",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "orbitalrailcannonstrike",
+    "imageResourceName": "orbitalrailcannonstrike",
+    "stratagemInputExpected": ["RIGHT",
+      "UP",
+      "DOWN",
+      "DOWN",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "patriotexosuit",
+    "imageResourceName": "patriotexosuit",
+    "stratagemInputExpected": ["LEFT",
+      "DOWN",
+      "RIGHT",
+      "UP",
+      "LEFT",
+      "DOWN",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "quasarcannon",
+    "imageResourceName": "quasarcannon",
+    "stratagemInputExpected": ["DOWN",
+      "DOWN",
+      "UP",
+      "LEFT",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "railgun",
+    "imageResourceName": "railgun",
+    "stratagemInputExpected": ["DOWN",
+      "RIGHT",
+      "DOWN",
+      "UP",
+      "LEFT",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "recoilessrifle",
+    "imageResourceName": "recoilessrifle",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "RIGHT",
+      "RIGHT",
+      "LEFT"
+
+    ]
+  },
+  {
+    "stratagemName": "resupply",
+    "imageResourceName": "resupply",
+    "stratagemInputExpected": ["DOWN",
+      "DOWN",
+      "UP",
+      "RIGHT"
+    ]
+  },
+  {
+    "stratagemName": "rocketsentry",
+    "imageResourceName": "rocketsentry",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "RIGHT",
+      "RIGHT",
+      "LEFT"
+
+    ]
+  },
+  {
+    "stratagemName": "seafartillery",
+    "imageResourceName": "seafartillary",
+    "stratagemInputExpected": ["RIGHT",
+      "UP",
+      "UP",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "seismicprobe",
+    "imageResourceName": "seismicprobe",
+    "stratagemInputExpected": ["UP",
+      "UP",
+      "LEFT",
+      "RIGHT",
+      "DOWN",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "shieldgeneratorbackpack",
+    "imageResourceName": "shieldgeneratorbackpack",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "LEFT",
+      "RIGHT",
+      "LEFT",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "sosbeacon",
+    "imageResourceName": "sosbeacon",
+    "stratagemInputExpected": ["UP",
+      "DOWN",
+      "RIGHT",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "spearlauncher",
+    "imageResourceName": "spearlauncher",
+    "stratagemInputExpected": ["DOWN",
+      "DOWN",
+      "UP",
+      "DOWN",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "sssddelivery",
+    "imageResourceName": "sssddeilvery",
+    "stratagemInputExpected": ["DOWN",
+      "DOWN",
+      "DOWN",
+      "UP",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "stalwart",
+    "imageResourceName": "stalwart",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "DOWN",
+      "UP",
+      "UP",
+      "LEFT"
+
+
+    ]
+  },
+  {
+    "stratagemName": "superearthflag",
+    "imageResourceName": "superearthflag",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "DOWN",
+      "UP"
+
+    ]
+  },
+  {
+    "stratagemName": "supplypack",
+    "imageResourceName": "supplypack",
+    "stratagemInputExpected": ["DOWN",
+      "LEFT",
+      "DOWN",
+      "UP",
+      "UP",
+      "DOWN"
+
+    ]
+  },
+  {
+    "stratagemName": "teslatower",
+    "imageResourceName": "teslatower",
+    "stratagemInputExpected": ["DOWN",
+      "UP",
+      "RIGHT",
+      "UP",
+      "LEFT",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "uploaddata",
+    "imageResourceName": "uploaddata",
+    "stratagemInputExpected": ["LEFT",
+      "RIGHT",
+      "UP",
+      "UP",
+      "UP"
+
+    ]
   }
 ]
