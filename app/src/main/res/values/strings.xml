@@ -17,4 +17,70 @@
     <string name="arcthrower">ARC THROWER</string>
     <string name="flamethrower">FLAMETHROWER</string>
     <string name="eaglerearm">EAGLE REARM</string>
+    <string name="reinforce">REINFORCE</string>
+    <string name="airburstrocketlauncer">AIRBURST ROCKET LAUNCHER</string>
+    <string name="antimaterialrifle">ANTI-MATERIAL RIFLE</string>
+    <string name="antipersonnelminefield">ANTI-PERSONNEL MINEFIELD</string>
+    <string name="antitankmines">ANTI-TANK MINES</string>
+    <string name="autocannonsentry">AUTOCANNON SENTRY</string>
+    <string name="ballisticshield">BALLISTIC SHIELD BACKPACK</string>
+    <string name="commando">Commando</string>
+    <string name="eagle110mmrocketpods">EAGLE 110MM ROCKET PODS</string>
+    <string name="eagleairstrike">EAGLE AIRSTRIKE</string>
+    <string name="eagleclusterbomb">EAGLE CLUSTER BOMB</string>
+    <string name="eaglesmokestrike">EAGLE SMOKE STRIKE</string>
+    <string name="eaglestrafingrun">EAGLE STRAFING RUN</string>
+    <string name="emancipatorexosuit">EMANCIPATOR EXOSUIT</string>
+    <string name="emsmortarsentry">EMS MORTAR SENTRY</string>
+    <string name="expendabletank">EXPENDABLE ANTI-TANK</string>
+    <string name="gatlingsentry">GATLING SENTRY</string>
+    <string name="grenadelauncher">GRENADE LAUNCHER</string>
+    <string name="guarddog">"GUARD DOG"</string>
+    <string name="guarddogbreath">"GUARD DOG" BREATH</string>
+    <string name="guarddoglaser">"GUARD DOG" ROVER</string>
+    <string name="heavymachinegun">HEAVY MACHINE GUN</string>
+    <string name="hmgemplacement">HMG EMPLACEMENT</string>
+    <string name="incendiarymines">INDENDIARY MINES</string>
+    <string name="jumppack">JUMP PACK</string>
+    <string name="lasercannon">LASER CANNON</string>
+    <string name="machinegun">MACHINE GUN</string>
+    <string name="machinegunsentry">MACHINE GUN SENTRY</string>
+    <string name="mortarsentry">MORTAR SENTRY</string>
+    <string name="orbital120hebarrage">ORBITAL 120MM HE BARRAGE</string>
+    <string name="orbital380hebarrage">ORBITAL 380MM HE BARRAGE</string>
+    <string name="orbitalairburststrike">ORBITAL AIRBURST STRIKE</string>
+    <string name="orbitalemsstrike">ORBITAL EMS STRIKE</string>
+    <string name="orbitalgasstrike">ORBITAL GAS STRIKE</string>
+    <string name="orbitalgatlingbarrage">ORBITAL GATLING BARRAGE</string>
+    <string name="orbitallaser">ORBITAL LASER</string>
+    <string name="orbitalnapalmbarrage">ORBITAL NAPALM BARRAGE</string>
+    <string name="orbitalprecisionstrike">ORBITAL PRECISION STRIKE</string>
+    <string name="orbitalsmokestrike">ORBITAL SMOKE STRIKE</string>
+    <string name="orbitalwalkingbarrage">ORBITAL WALKING BARRAGE</string>
+    <string name="orbitalrailcannonstrike">ORBITAL RAILCANNON STRIKE</string>
+    <string name="patriotexosuit">PATRIOT EXOSUIT</string>
+    <string name="quasarcannon">QUASAR CANNON</string>
+    <string name="railgun">RAILGUN</string>
+    <string name="recoilessrifle">RECOILLESS RIFLE</string>
+    <string name="resupply">RESUPPLY</string>
+    <string name="rocketsentry">ROCKET SENTRY</string>
+    <string name="seafartillery">SEAF ARTILLERY</string>
+    <string name="seismicprobe">SEISMIC PROBE</string>
+    <string name="shieldgeneratorbackpack">SHIELD GENERATOR PACK</string>
+    <string name="shieldgeneratorrelay">SHIELD GENERATOR RELAY</string>
+    <string name="sosbeacon">SOS BEACON</string>
+    <string name="spearlauncher">SPEAR LAUNCHER</string>
+    <string name="sssddelivery">SSSD DELIVERY</string>
+    <string name="stalwart">STALWART</string>
+    <string name="superearthflag">SUPER EARTH FLAG</string>
+    <string name="supplypack">SUPPLY PACK</string>
+    <string name="teslatower">TESLA TOWER</string>
+    <string name="uploaddata">UPLOAD DATA</string>
+
+
+
+
+
+
+
 </resources>
