@@ -2,47 +2,98 @@ package com.cs467.helldivers2_stratagemheromobile
 
 import android.os.Bundle
 import android.util.Log
-import android.view.GestureDetector
 import android.view.MotionEvent
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.cs467.helldivers2_stratagemheromobile.ui.theme.Helldivers2StratagemHeroMobileTheme
+import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.cs467.helldivers2_stratagemheromobile.Screens.GameplayScreen
+import com.cs467.helldivers2_stratagemheromobile.Screens.ReadyScreen
 import com.cs467.helldivers2_stratagemheromobile.Screens.StartingScreen
+import com.cs467.helldivers2_stratagemheromobile.ui.theme.Helldivers2StratagemHeroMobileTheme
+import kotlin.math.abs
 
-class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
-    private lateinit var gestureDetector: GestureDetector
-    var x1 = 0.0f
-    var x2 = 0.0f
-    var y1 = 0.0f
-    var y2 = 0.0f
+class MainActivity : ComponentActivity() {
 
+    private var x0 = 0.0f
+    private var y0 = 0.0f
+    private val viewModel by viewModels<MainViewModel>()
 
+    companion object {
+        private val DEBUG_TAG: String = MainActivity::class.java.simpleName
+        const val SWIPE_THRESHOLD = 150
+    }
+
+    @Composable
+    fun Navigation() {
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = "starting_screen") {
+            composable(route = "starting_screen") {
+                StartingScreen(
+                    navController = navController
+                )
+            }
+            composable(route = "ready_screen") {
+                ReadyScreen(
+                    roundNumber = viewModel.round,
+                    navController = navController
+                )
+            }
+            composable(route = "gameplay_screen") {
+                viewModel.isPlaying = true
+                val stratagems = viewModel.pickStratagems()
+                GameplayScreen(
+                    round = viewModel.round,
+                    score = viewModel.score,
+                    stratagems = stratagems
+                )
+            }
+        }
+    }
+
+    @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Helldivers2StratagemHeroMobileTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .pointerInteropFilter { event ->
+                            when (event.action) {
+                                // This runs when the user presses down
+                                MotionEvent.ACTION_DOWN -> {
+                                    if (viewModel.isPlaying) {
+                                        x0 = event.x
+                                        y0 = event.y
+                                        true
+                                    } else false
+                                }
+                                // This runs when the user lets go of the press
+                                MotionEvent.ACTION_UP -> {
+                                    if (viewModel.isPlaying) {
+                                        val deltaX = event.x - x0
+                                        val deltaY = event.y - y0
+                                        onSwipeEnd(deltaX, deltaY)
+                                        true
+                                    } else false
+                                }
+
+                                else -> false
+                            }
+                        },
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-//                        ReadyScreen(
-//                            readyDisplay = getString(R.string.get_ready),
-//                            round = getString(R.string.round),
-//                            roundNumber = 1,
-//                            modifier = Modifier
-//                        )
-                        StartingScreen(
-                            title = stringResource(id = R.string.title_start_screen),
-                            instructions = stringResource(id = R.string.start_screen_instructions),
-                            modifier = Modifier
-                        )
-
+                    Navigation()
                         /*
                         GameScreen(
                             game round initialization
@@ -96,66 +147,50 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
             }
 
         }
-        Log.d(DEBUG_TAG, "testing logger")
-        gestureDetector = GestureDetector(this, this)
-
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if (event != null) {
-            gestureDetector.onTouchEvent(event)
-        }
-
-        when (event?.action) {
-            // Start swiping motion
-            0 -> {
-                x1 = event.x
-                y1 = event.y
-
+    /**
+     * This function determines the direction of the swipe touch event and calls the appropriate
+     * swipe direction function (in horizontal mode only)
+     * @param deltaX Change in x position
+     * @param deltaY Change in y position
+     */
+    private fun onSwipeEnd(deltaX: Float, deltaY: Float) {
+        if (abs(deltaX) > SWIPE_THRESHOLD) {
+            if (deltaX > 0) {
+                onSwipeRight()
+            } else {
+                onSwipeLeft()
             }
-            // End swipe motion
-            1 -> {
-                x2 = event.x
-                y2 = event.y
-                val deltaX = x2-x1
-                val deltaY = y2-y1
-                // capture the slope and then decide the direction of the swipe
-                Log.d(DEBUG_TAG, deltaX.toString())
-                Log.d(DEBUG_TAG, deltaY.toString())
+        } else if (abs(deltaY) > SWIPE_THRESHOLD) {
+            if (deltaY < 0) {
+                onSwipeUp()
+            } else {
+                onSwipeDown()
             }
         }
-
-        return super.onTouchEvent(event)
     }
 
-    companion object {
-        private val DEBUG_TAG: String = MainActivity::class.java.simpleName
+    private fun onSwipeRight() {
+        Log.d(DEBUG_TAG, "swipe right")
+        // TODO("Not yet implemented")
     }
 
-    override fun onDown(p0: MotionEvent): Boolean {
-        Log.d(DEBUG_TAG, "onDown: ");
-        return true
+    private fun onSwipeLeft() {
+        Log.d(DEBUG_TAG, "swipe left")
+        // TODO("Not yet implemented")
     }
 
-    override fun onShowPress(p0: MotionEvent) {
-        //TODO("Not yet implemented")
+    private fun onSwipeUp() {
+        Log.d(DEBUG_TAG, "swipe up")
+        // TODO("Not yet implemented")
     }
 
-    override fun onSingleTapUp(p0: MotionEvent): Boolean {
-        return false
+    private fun onSwipeDown() {
+        Log.d(DEBUG_TAG, "swipe down")
+        // TODO("Not yet implemented")
     }
-
-    override fun onScroll(p0: MotionEvent?, p1: MotionEvent, p2: Float, p3: Float): Boolean {
-        return false
-    }
-
-    override fun onLongPress(p0: MotionEvent) {
-        //TODO("Not yet implemented")
-    }
-
-    override fun onFling(p0: MotionEvent?, p1: MotionEvent, p2: Float, p3: Float): Boolean {
-        return false
-    }
+    
 }
 
 
