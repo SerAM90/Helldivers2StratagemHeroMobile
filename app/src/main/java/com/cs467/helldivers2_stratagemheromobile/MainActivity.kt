@@ -5,25 +5,59 @@ import android.util.Log
 import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInteropFilter
-import androidx.compose.ui.res.stringResource
-import com.cs467.helldivers2_stratagemheromobile.ui.theme.Helldivers2StratagemHeroMobileTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.cs467.helldivers2_stratagemheromobile.Screens.GameplayScreen
+import com.cs467.helldivers2_stratagemheromobile.Screens.ReadyScreen
 import com.cs467.helldivers2_stratagemheromobile.Screens.StartingScreen
+import com.cs467.helldivers2_stratagemheromobile.ui.theme.Helldivers2StratagemHeroMobileTheme
 import kotlin.math.abs
 
 class MainActivity : ComponentActivity() {
 
     private var x0 = 0.0f
     private var y0 = 0.0f
+    private val viewModel by viewModels<MainViewModel>()
 
     companion object {
         private val DEBUG_TAG: String = MainActivity::class.java.simpleName
         const val SWIPE_THRESHOLD = 150
+    }
+
+    @Composable
+    fun Navigation() {
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = "starting_screen") {
+            composable(route = "starting_screen") {
+                StartingScreen(
+                    navController = navController
+                )
+            }
+            composable(route = "ready_screen") {
+                ReadyScreen(
+                    roundNumber = viewModel.round,
+                    navController = navController
+                )
+            }
+            composable(route = "gameplay_screen") {
+                viewModel.isPlaying = true
+                val stratagems = viewModel.pickStratagems()
+                GameplayScreen(
+                    round = viewModel.round,
+                    score = viewModel.score,
+                    stratagems = stratagems
+                )
+            }
+        }
     }
 
     @OptIn(ExperimentalComposeUiApi::class)
@@ -34,43 +68,32 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        // TODO: we need to separate this behavior depending on the state (only run
-                        //  when we are in the game state)
-                        .pointerInteropFilter {
-                            when (it.action) {
+                        .pointerInteropFilter { event ->
+                            when (event.action) {
                                 // This runs when the user presses down
                                 MotionEvent.ACTION_DOWN -> {
-                                    x0 = it.x
-                                    y0 = it.y
+                                    if (viewModel.isPlaying) {
+                                        x0 = event.x
+                                        y0 = event.y
+                                        true
+                                    } else false
                                 }
                                 // This runs when the user lets go of the press
                                 MotionEvent.ACTION_UP -> {
-                                    var deltaX = it.x - x0
-                                    var deltaY = it.y - y0
-                                    onSwipeEnd(deltaX, deltaY)
+                                    if (viewModel.isPlaying) {
+                                        val deltaX = event.x - x0
+                                        val deltaY = event.y - y0
+                                        onSwipeEnd(deltaX, deltaY)
+                                        true
+                                    } else false
                                 }
-                                // This means: do not handle any other touch events
+
                                 else -> false
                             }
-                            true
                         },
                     color = MaterialTheme.colorScheme.background
                 ) {
-                        /*
-                        ReadyScreen(
-                            readyDisplay = getString(R.string.get_ready),
-                            round = getString(R.string.round),
-                            roundNumber = 1,
-                            modifier = Modifier
-                        )
-                        */
-
-                        StartingScreen(
-                            title = stringResource(id = R.string.title_start_screen),
-                            instructions = stringResource(id = R.string.start_screen_instructions),
-                            modifier = Modifier
-                        )
-
+                    Navigation()
                         /*
                         GameScreen(
                             game round initialization
@@ -128,14 +151,10 @@ class MainActivity : ComponentActivity() {
 
     /**
      * This function determines the direction of the swipe touch event and calls the appropriate
-     * swipe direction function
+     * swipe direction function (in horizontal mode only)
      * @param deltaX Change in x position
      * @param deltaY Change in y position
      */
-    // TODO: Depending on whether it is in horizontal or vertical mode, the swipe directions change
-    //  i.e., swipe right in vertical becomes swipe up in horizontal. Once we figure out how to
-    //  incorporate state and the view model we can revisit this function and call the right swipe
-    //  method from here
     private fun onSwipeEnd(deltaX: Float, deltaY: Float) {
         if (abs(deltaX) > SWIPE_THRESHOLD) {
             if (deltaX > 0) {

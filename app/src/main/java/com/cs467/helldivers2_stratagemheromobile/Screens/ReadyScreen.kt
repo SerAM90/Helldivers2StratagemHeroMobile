@@ -6,22 +6,32 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.cs467.helldivers2_stratagemheromobile.R
+import kotlinx.coroutines.delay
 
 //GET READY
 //Round
 //1 (round number)
 //Some kind of phrase at the bottom of the screen?****************************************
 @Composable
-fun ReadyScreen(readyDisplay: String, round: String, roundNumber: Int, modifier: Modifier)
+fun ReadyScreen(roundNumber: Int, navController: NavController)
 {
+    // This creates a 2s delay from the ready screen to the gameplay screen
+    LaunchedEffect(true) {
+        delay(2000)
+        navController.navigate("gameplay_screen")
+    }
+
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -29,12 +39,12 @@ fun ReadyScreen(readyDisplay: String, round: String, roundNumber: Int, modifier:
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = readyDisplay,
+                text = stringResource(id = R.string.get_ready),
                 fontSize = 50.sp
             )
 
             Text(
-                text = round,
+                text = stringResource(id = R.string.round),
                 fontSize = 40.sp
             )
             Text(
@@ -45,13 +55,10 @@ fun ReadyScreen(readyDisplay: String, round: String, roundNumber: Int, modifier:
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 800, heightDp = 360)
 @Composable
 fun ReadyScreenPreview(){
 ReadyScreen(
-readyDisplay = stringResource(id = R.string.get_ready),
-round = stringResource(id = R.string.round),
-roundNumber = 1,
-modifier = Modifier
+roundNumber = 1, navController = rememberNavController()
 )
 }

@@ -12,8 +12,8 @@ data class Stratagem(
     val imageResourceName: String,
     @StringRes @Transient var stratagemNameResourceID: Int = 0,
     @DrawableRes @Transient var imageResourceID: Int = 0,
-    val stratagemInputExpected: List<StratagemInput>, //maybe the inputs need to be held in a list?
-)
+    val stratagemInputExpected: List<StratagemInput>
+    )
 
 enum class StratagemInput{
     LEFT, RIGHT, UP, DOWN
