@@ -1,6 +1,6 @@
 package com.cs467.helldivers2_stratagemheromobile.model
 
-import android.renderscript.ScriptGroup.Input
+//import android.renderscript.ScriptGroup.Input
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import kotlinx.serialization.Serializable
