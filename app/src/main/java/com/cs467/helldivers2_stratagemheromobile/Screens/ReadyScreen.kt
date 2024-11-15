@@ -22,6 +22,9 @@ import kotlinx.coroutines.delay
 //1 (round number)
 //Some kind of phrase at the bottom of the screen?****************************************
 @Composable
+        /**
+         * The function below is for the ReadyScreen. This screen is displayed before each round. The screen shows the 'GET READY', and current round that the user is about to start.
+         */
 fun ReadyScreen(roundNumber: Int, navController: NavController)
 {
     // This creates a 2s delay from the ready screen to the gameplay screen

@@ -24,6 +24,11 @@ import com.cs467.helldivers2_stratagemheromobile.R
 data class Score(val playerName: String, val score: Int)
 
 @Composable
+        /**
+         * function below is the display for our GameOverScreen. This screen is displayed when the user fails a round (we do not have a quit round but this is intended)
+         * This screen will display the Final Score the player achieved this session.
+         * It will also display the Top Three scores recorded within the game's history, and the name of the player will be displayed along with the top 3 scores.
+         */
 fun GameOverScreen(
     gameOverDisplay: String,
     threeTopScores: List<Score>,

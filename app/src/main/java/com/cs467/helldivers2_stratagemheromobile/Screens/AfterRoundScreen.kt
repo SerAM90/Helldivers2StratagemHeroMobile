@@ -20,6 +20,10 @@ import com.cs467.helldivers2_stratagemheromobile.R
 
 
 @Composable
+        /**
+         * Function below is the AfterRoundScreen. It is displayed after a round is completed (complete round 1->AfterRoundScreen->Round 2
+         * The screen tracks the bonus, time bonus, perfect bonus, and the total score.
+         */
 fun AfterRoundScreen(roundBonus: Int, timeBonus: Int, perfectBonus: Int, totalScore: Int, modifier: Modifier
 
 )
