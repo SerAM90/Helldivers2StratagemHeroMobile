@@ -24,7 +24,7 @@
   },
   {
     "stratagemName":"hellbomb",
-    "imageResourceName":"nux_223_hellbomb",
+    "imageResourceName":"hellbomb",
     "stratagemInputExpected": ["DOWN",
       "UP",
       "LEFT",
@@ -38,7 +38,7 @@
   },
   {
     "stratagemName": "eagle500k",
-    "imageResourceName": "eagle500kbbomb",
+    "imageResourceName": "eagle500k",
     "stratagemInputExpected": ["UP",
       "RIGHT",
       "DOWN",
