@@ -1,5 +1,7 @@
 package com.cs467.helldivers2_stratagemheromobile.Screens
 
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -34,14 +38,24 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.cs467.helldivers2_stratagemheromobile.MainViewModel
 import com.cs467.helldivers2_stratagemheromobile.R
 import com.cs467.helldivers2_stratagemheromobile.Util.StratagemListUtil
 import com.cs467.helldivers2_stratagemheromobile.model.Stratagem
+import kotlinx.coroutines.delay
 
 @Composable
-fun GameplayScreen(round: Int, score: Int, stratagems: List<Stratagem>) {
+fun GameplayScreen(mainViewModel: MainViewModel = viewModel()) {
+    val stratagems = mainViewModel.stratagems
+    val correctCount = mainViewModel.correctCount
+
     Column(
-        modifier = Modifier.fillMaxSize().background(Color(33,33,33)),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(33, 33, 33)),
         verticalArrangement = Arrangement.Center
     ) {
         Row {
@@ -53,11 +67,11 @@ fun GameplayScreen(round: Int, score: Int, stratagems: List<Stratagem>) {
             ) {
                 Column {
                     Text(text = stringResource(id = R.string.round), color = Color.White)
-                    Text(text = "$round", color = Color.Yellow, fontSize = 30.sp)
+                    Text(text = "${mainViewModel.round}", color = Color.Yellow, fontSize = 30.sp)
                 }
             }
 
-            StratagemDisplay(stratagems = stratagems)
+            StratagemDisplay(stratagems = stratagems, correctCount = correctCount)
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -65,7 +79,7 @@ fun GameplayScreen(round: Int, score: Int, stratagems: List<Stratagem>) {
                 verticalArrangement = Arrangement.Top,
             ) {
                 Text(
-                    text = stringResource(id = R.string.score) + " $score",
+                    text = stringResource(id = R.string.score) + " ${mainViewModel.score}",
                     color = Color.White
                 )
             }
@@ -74,9 +88,9 @@ fun GameplayScreen(round: Int, score: Int, stratagems: List<Stratagem>) {
 }
 
 @Composable
-fun StratagemDisplay(stratagems: List<Stratagem>) {
+fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int) {
     val inputToResourceMap = StratagemListUtil().getInputToResourceMap(LocalContext.current)
-    val stratagem = stratagems.first()
+    val stratagem = stratagems.last()
 
     Column(
         modifier = Modifier.fillMaxWidth(0.75f),
@@ -90,10 +104,12 @@ fun StratagemDisplay(stratagems: List<Stratagem>) {
             Image(
                 painter = painterResource(id = stratagem.imageResourceID),
                 contentDescription = null, // Provide a content description for accessibility
-                modifier = Modifier.size(90.dp).border(3.dp, Color.Yellow) // Adjust size as needed
+                modifier = Modifier
+                    .size(90.dp)
+                    .border(3.dp, Color.Yellow) // Adjust size as needed
             )
             // Display the stratagems in queue
-            for (i in 1..5) {
+            for (i in minOf(stratagems.size - 2, 4) downTo 0) {
                 if (i < stratagems.size) {
                     Image(
                         painter = painterResource(id = stratagems[i].imageResourceID),
@@ -108,7 +124,8 @@ fun StratagemDisplay(stratagems: List<Stratagem>) {
 
         // Stratagem name
         Box(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .background(Color.Yellow)
         ) {
             Text(
@@ -124,20 +141,21 @@ fun StratagemDisplay(stratagems: List<Stratagem>) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            for (input in stratagem.stratagemInputExpected) {
+            stratagem.stratagemInputExpected.forEachIndexed { index, stratagemInput ->
                 Image(
-                    painter = painterResource(id = inputToResourceMap[input]!!),
+                    painter = painterResource(id = inputToResourceMap[stratagemInput]!!),
                     contentDescription = null, // Provide a content description for accessibility
-                    modifier = Modifier.size(40.dp) // Adjust size as needed
+                    modifier = Modifier.size(40.dp), // Adjust size as needed
+                    colorFilter = if (index + 1 <= correctCount) ColorFilter.tint(color = Color.Yellow) else null
                 )
             }
         }
 
         // Timer
         Timer(
-            totalTime = 4,
-            handleColor = Color.DarkGray,
-            modifier = Modifier
+            totalTime = 10L * 1000L,
+            modifier = Modifier,
+            stratagemCount = stratagems.size
         )
     }
 }
@@ -145,11 +163,11 @@ fun StratagemDisplay(stratagems: List<Stratagem>) {
 @Composable
 fun Timer (
     totalTime: Long,
-    handleColor: Color,
     modifier: Modifier,
+    stratagemCount: Int,
     inactiveBarColor: Color = Color.LightGray,
     activeBarColor: Color = Color.Yellow,
-    initialValue: Float = 0.5f,
+    initialValue: Float = 1.0f,
     strokeWidth: Dp = 15.dp
 ) {
     var size by remember {
@@ -163,6 +181,30 @@ fun Timer (
     }
     var isTimerRunning by remember {
         mutableStateOf(false)
+    }
+
+    // This function runs only once in the beginning and starts the timer
+    LaunchedEffect(Unit) {
+        delay(100L)
+        isTimerRunning = true
+    }
+
+    // This function handles decreasing the timer
+    LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
+        if (currentTime > 0 && isTimerRunning) {
+            delay(50L)
+            currentTime -= 50L
+            value = currentTime / totalTime.toFloat()
+        } else if (currentTime <= 0) {
+            isTimerRunning = false
+        }
+    }
+
+    // This function is run everytime the number of stratagems in a round decreases
+    // In other words, everytime a stratagem is completed
+    LaunchedEffect(key1 = stratagemCount) {
+        val secondsToAdd = 2L  // Adjust this as required, adds 2 seconds for now
+        currentTime = minOf(currentTime + (secondsToAdd * 1000L), totalTime)
     }
 
     Box(
@@ -195,50 +237,8 @@ fun Timer (
 @Composable
 fun GameplayScreenPreview() {
     // Sample round and score values
-    val sampleRound = 1
-    val sampleScore = 100
-    val sampleStratagems = StratagemListUtil().getStratagemList(LocalContext.current).shuffled().subList(0, 4)
+    val viewModel = MainViewModel()
+    viewModel.pickStratagems()
     // Call the actual GameplayScreen composable with the sample values
-    GameplayScreen(round = sampleRound, score = sampleScore, stratagems = sampleStratagems)
+    GameplayScreen(viewModel)
 }
-
-
-//BUTTONS TO INTERACT WITH THE GAME BELOW- Can alter the color of text, and functions as needed; button aesthetic is correct
-// Commented out while we do the swipe mechanics. We can bring it back if time permits
-//Button
-//        IconButton(onClick = {
-//            // TODO: Handle "Left" button click
-//        }) {
-//            Image(
-//                painter = painterResource(id = R.drawable.left_arrow), // replace with your actual drawable resource
-//                contentDescription = "left arrow"
-//            )
-//        }
-//
-//        IconButton(onClick = {
-//            // TODO: Handle "Right" button click
-//        }) {
-//            Image(
-//                painter = painterResource(id = R.drawable.right_arrow), // replace with your actual drawable resource
-//                contentDescription = "right arrow"
-//            )        }
-//        IconButton(onClick = {
-//            // TODO: Handle "Down" button click
-//        }) {
-//            Image(
-//                painter = painterResource(id = R.drawable.down_arrow), // replace with your actual drawable resource
-//                contentDescription = "down arrow"
-//            )        }
-//        IconButton(onClick = {
-//            // TODO: Handle "Up" button click
-//        }) {
-//            Image(
-//                painter = painterResource(id = R.drawable.up_arrow), // replace with your actual drawable resource
-//                contentDescription = "up arrow"
-//            )        }
-
-// Display the list of stratagems
-//            items(stratagems) { stratagem ->
-
-
-//            }
