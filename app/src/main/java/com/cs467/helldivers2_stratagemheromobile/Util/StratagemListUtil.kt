@@ -8,6 +8,11 @@ import kotlinx.serialization.json.Json
 
 class StratagemListUtil {
     @SuppressLint("DiscouragedApi")
+            /**
+             * Function to look at Stratagem.JSON file, it has a list of stratagems with their name, image, and input
+             * Below, this function reads the Stratagems.JSON file, decodes the file, and then places them into a
+             * list (listOfStratagems). The list can then be called to return the stratagems' name, image, and input
+             */
     fun getStratagemList(context: Context): List<Stratagem>{
         val assetManager = context.assets
         val jsonStratagem = assetManager.open("Stratagems.json").bufferedReader().use { it.readText() }//File("app/src/main/assets/Stratagems.json").readText() //read from JSON list

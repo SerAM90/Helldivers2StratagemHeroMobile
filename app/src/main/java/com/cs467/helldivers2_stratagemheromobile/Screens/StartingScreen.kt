@@ -18,6 +18,9 @@ import com.cs467.helldivers2_stratagemheromobile.R
 //STRATAGEM HERO
 //Enter any Stratagem Input to Start!
 @Composable
+        /**
+         * This function is for the StartingScreen. This is the screen displayed when the game is first launched. It displays the title, and instructions.
+         */
 fun StartingScreen(
     navController: NavController
 ) {
@@ -34,7 +37,7 @@ fun StartingScreen(
 
             Text(
                 text = stringResource(R.string.title_start_screen),
-                fontSize = 50.sp
+                fontSize = 50.sp,
             )
             Text(
                 text = stringResource(id = R.string.start_screen_instructions),

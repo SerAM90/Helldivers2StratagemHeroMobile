@@ -24,7 +24,7 @@
   },
   {
     "stratagemName":"hellbomb",
-    "imageResourceName":"nux_223_hellbomb",
+    "imageResourceName":"hellbomb",
     "stratagemInputExpected": ["DOWN",
       "UP",
       "LEFT",
@@ -38,7 +38,7 @@
   },
   {
     "stratagemName": "eagle500k",
-    "imageResourceName": "eagle500kbbomb",
+    "imageResourceName": "eagle500k",
     "stratagemInputExpected": ["UP",
       "RIGHT",
       "DOWN",
@@ -92,7 +92,7 @@
 },
   {
     "stratagemName": "antipersonnelminefield",
-    "imageResourceName": "antipersonalminefield",
+    "imageResourceName": "antipersonnelminefield",
     "stratagemInputExpected": ["DOWN",
       "LEFT",
       "UP",
@@ -210,7 +210,7 @@
   },
   {
     "stratagemName": "emsmortarsentry",
-    "imageResourceName": "emsmortarsenty",
+    "imageResourceName": "emsmortarsentry",
     "stratagemInputExpected": ["DOWN",
       "UP",
       "RIGHT",
@@ -310,7 +310,7 @@
   },
   {
     "stratagemName": "incendiarymines",
-    "imageResourceName": "incendiaymines",
+    "imageResourceName": "incendiarymines",
     "stratagemInputExpected": ["DOWN",
       "LEFT",
       "LEFT",
@@ -418,7 +418,7 @@
   },
   {
     "stratagemName": "orbitalgasstrike",
-    "imageResourceName": "orbitbalgasstrike",
+    "imageResourceName": "orbitalgasstrike",
     "stratagemInputExpected": ["RIGHT",
       "RIGHT",
       "DOWN",
@@ -571,7 +571,7 @@
   },
   {
     "stratagemName": "seafartillery",
-    "imageResourceName": "seafartillary",
+    "imageResourceName": "seafartillery",
     "stratagemInputExpected": ["RIGHT",
       "UP",
       "UP",
@@ -626,7 +626,7 @@
   },
   {
     "stratagemName": "sssddelivery",
-    "imageResourceName": "sssddeilvery",
+    "imageResourceName": "sssddelivery",
     "stratagemInputExpected": ["DOWN",
       "DOWN",
       "DOWN",

@@ -47,6 +47,10 @@ import com.cs467.helldivers2_stratagemheromobile.Util.StratagemListUtil
 import com.cs467.helldivers2_stratagemheromobile.model.Stratagem
 import kotlinx.coroutines.delay
 
+/**
+ * The function below is for our GameplayScreen. It has the round, and int. It as well displays our
+ * stratagems using the StratagemDisplay function. The StratagemDisplay() shows our stratagems in the round.
+ */
 @Composable
 fun GameplayScreen(mainViewModel: MainViewModel = viewModel()) {
     val stratagems = mainViewModel.stratagems
@@ -87,8 +91,12 @@ fun GameplayScreen(mainViewModel: MainViewModel = viewModel()) {
     }
 }
 
-@Composable
+/**
+ * The StratagemDisplay function below displays our Stratagems from the StratagemListUtil file. Each Stratagem has an associated name, image, and expected input that is needed for the stratagem.
+ */
+ @Composable
 fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int) {
+
     val inputToResourceMap = StratagemListUtil().getInputToResourceMap(LocalContext.current)
     val stratagem = stratagems.last()
 
