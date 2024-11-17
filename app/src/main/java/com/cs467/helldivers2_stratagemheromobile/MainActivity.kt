@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.cs467.helldivers2_stratagemheromobile.Screens.GameplayScreen
 import com.cs467.helldivers2_stratagemheromobile.Screens.ReadyScreen
 import com.cs467.helldivers2_stratagemheromobile.Screens.StartingScreen
+import com.cs467.helldivers2_stratagemheromobile.model.StratagemInput
 import com.cs467.helldivers2_stratagemheromobile.ui.theme.Helldivers2StratagemHeroMobileTheme
 import kotlin.math.abs
 
@@ -50,11 +51,9 @@ class MainActivity : ComponentActivity() {
             }
             composable(route = "gameplay_screen") {
                 viewModel.isPlaying = true
-                val stratagems = viewModel.pickStratagems()
+                viewModel.pickStratagems()
                 GameplayScreen(
-                    round = viewModel.round,
-                    score = viewModel.score,
-                    stratagems = stratagems
+                    mainViewModel = viewModel
                 )
             }
         }
@@ -173,22 +172,22 @@ class MainActivity : ComponentActivity() {
 
     private fun onSwipeRight() {
         Log.d(DEBUG_TAG, "swipe right")
-        // TODO("Not yet implemented")
+        viewModel.checkSwipe(StratagemInput.RIGHT)
     }
 
     private fun onSwipeLeft() {
         Log.d(DEBUG_TAG, "swipe left")
-        // TODO("Not yet implemented")
+        viewModel.checkSwipe(StratagemInput.LEFT)
     }
 
     private fun onSwipeUp() {
         Log.d(DEBUG_TAG, "swipe up")
-        // TODO("Not yet implemented")
+        viewModel.checkSwipe(StratagemInput.UP)
     }
 
     private fun onSwipeDown() {
         Log.d(DEBUG_TAG, "swipe down")
-        // TODO("Not yet implemented")
+        viewModel.checkSwipe(StratagemInput.DOWN)
     }
     
 }
