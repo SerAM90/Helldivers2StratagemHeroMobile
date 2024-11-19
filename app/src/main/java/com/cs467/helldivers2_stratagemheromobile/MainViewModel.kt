@@ -11,11 +11,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.cs467.helldivers2_stratagemheromobile.model.Stratagem
 import com.cs467.helldivers2_stratagemheromobile.Util.StratagemListUtil
 import com.cs467.helldivers2_stratagemheromobile.model.StratagemInput
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-class MainViewModel: ViewModel() {
+class MainViewModel(): ViewModel() {
     var isPlaying by mutableStateOf(false)
 
     var score by mutableIntStateOf(0)
@@ -30,6 +34,10 @@ class MainViewModel: ViewModel() {
 
     var correctCount by mutableIntStateOf(0)
         private set
+    
+    private val _roundFinished = MutableStateFlow<Boolean>(false)
+    val roundFinished: StateFlow<Boolean> = _roundFinished.asStateFlow()
+    
 
     @Composable
     fun pickStratagems() {
@@ -56,11 +64,22 @@ class MainViewModel: ViewModel() {
             if (correctCount == currentStratagem.stratagemInputExpected.size) {
                 // Update score
                 score += currentStratagem.stratagemInputExpected.size * 5
-                _stratagems.removeLast()
+                if (_stratagems.size == 1) {
+                    _roundFinished.value = true
+                }//checking to see if _stratagems is down to the last element
+                else{
+                    _stratagems.removeLast()
+                }
                 correctCount = 0
+
             }
+
         } else { // Incorrect swipe
             correctCount = 0
         }
+    }
+
+    fun resetForNewRound(){
+        _roundFinished.value = false
     }
 }
