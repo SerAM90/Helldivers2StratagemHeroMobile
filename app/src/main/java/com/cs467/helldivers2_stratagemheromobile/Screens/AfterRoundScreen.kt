@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.cs467.helldivers2_stratagemheromobile.R
 
 //Round Bonus 75
@@ -24,8 +26,7 @@ import com.cs467.helldivers2_stratagemheromobile.R
          * Function below is the AfterRoundScreen. It is displayed after a round is completed (complete round 1->AfterRoundScreen->Round 2
          * The screen tracks the bonus, time bonus, perfect bonus, and the total score.
          */
-fun AfterRoundScreen(roundBonus: Int, timeBonus: Int, perfectBonus: Int, totalScore: Int, modifier: Modifier
-
+fun AfterRoundScreen(roundBonus: Int, timeBonus: Int, perfectBonus: Int, totalScore: Int, modifier: Modifier, navController: NavController
 )
 {
 
@@ -61,5 +62,5 @@ fun AfterRoundScreen(roundBonus: Int, timeBonus: Int, perfectBonus: Int, totalSc
 @Preview(showBackground = true)
 @Composable
 fun AfterRoundScreenPreview(){
-    AfterRoundScreen(roundBonus = 100, timeBonus = 200, perfectBonus = 50, totalScore = 350, modifier = Modifier)
+    AfterRoundScreen(roundBonus = 100, timeBonus = 200, perfectBonus = 50, totalScore = 350, modifier = Modifier, navController = rememberNavController())
 }

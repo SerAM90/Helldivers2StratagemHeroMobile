@@ -30,6 +30,7 @@ data class Score(val playerName: String, val score: Int)
          * It will also display the Top Three scores recorded within the game's history, and the name of the player will be displayed along with the top 3 scores.
          */
 fun GameOverScreen(
+    //This should be a string resource
     gameOverDisplay: String,
     threeTopScores: List<Score>,
     finalScore: Score, modifier : Modifier

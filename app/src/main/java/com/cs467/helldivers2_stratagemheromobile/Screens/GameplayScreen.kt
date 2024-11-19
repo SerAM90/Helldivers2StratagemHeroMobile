@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,6 +42,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.cs467.helldivers2_stratagemheromobile.MainViewModel
 import com.cs467.helldivers2_stratagemheromobile.R
 import com.cs467.helldivers2_stratagemheromobile.Util.StratagemListUtil
@@ -52,10 +55,16 @@ import kotlinx.coroutines.delay
  * stratagems using the StratagemDisplay function. The StratagemDisplay() shows our stratagems in the round.
  */
 @Composable
-fun GameplayScreen(mainViewModel: MainViewModel = viewModel()) {
+fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
     val stratagems = mainViewModel.stratagems
     val correctCount = mainViewModel.correctCount
+    val roundFinished by mainViewModel.roundFinished.collectAsState()
 
+    LaunchedEffect(roundFinished){
+        if(roundFinished){
+            navController.navigate("after_round_screen")
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -75,7 +84,7 @@ fun GameplayScreen(mainViewModel: MainViewModel = viewModel()) {
                 }
             }
 
-            StratagemDisplay(stratagems = stratagems, correctCount = correctCount)
+            StratagemDisplay(stratagems = stratagems, correctCount = correctCount, navController)
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -95,7 +104,7 @@ fun GameplayScreen(mainViewModel: MainViewModel = viewModel()) {
  * The StratagemDisplay function below displays our Stratagems from the StratagemListUtil file. Each Stratagem has an associated name, image, and expected input that is needed for the stratagem.
  */
  @Composable
-fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int) {
+fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, navController: NavController) {
 
     val inputToResourceMap = StratagemListUtil().getInputToResourceMap(LocalContext.current)
     val stratagem = stratagems.last()
@@ -161,9 +170,10 @@ fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int) {
 
         // Timer
         Timer(
-            totalTime = 10L * 1000L,
+            totalTime = 10L * 1000L, //10 secd is 10L * 1000L
             modifier = Modifier,
-            stratagemCount = stratagems.size
+            stratagemCount = stratagems.size,
+            navController = navController
         )
     }
 }
@@ -176,7 +186,8 @@ fun Timer (
     inactiveBarColor: Color = Color.LightGray,
     activeBarColor: Color = Color.Yellow,
     initialValue: Float = 1.0f,
-    strokeWidth: Dp = 15.dp
+    strokeWidth: Dp = 15.dp,
+    navController: NavController
 ) {
     var size by remember {
         mutableStateOf(IntSize.Zero)
@@ -205,6 +216,7 @@ fun Timer (
             value = currentTime / totalTime.toFloat()
         } else if (currentTime <= 0) {
             isTimerRunning = false
+            navController.navigate("game_over_screen")
         }
     }
 
@@ -248,5 +260,5 @@ fun GameplayScreenPreview() {
     val viewModel = MainViewModel()
     viewModel.pickStratagems()
     // Call the actual GameplayScreen composable with the sample values
-    GameplayScreen(viewModel)
+    GameplayScreen(viewModel, rememberNavController())
 }

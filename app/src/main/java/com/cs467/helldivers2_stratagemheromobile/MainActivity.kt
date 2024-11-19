@@ -16,8 +16,11 @@ import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.cs467.helldivers2_stratagemheromobile.Screens.AfterRoundScreen
+import com.cs467.helldivers2_stratagemheromobile.Screens.GameOverScreen
 import com.cs467.helldivers2_stratagemheromobile.Screens.GameplayScreen
 import com.cs467.helldivers2_stratagemheromobile.Screens.ReadyScreen
+import com.cs467.helldivers2_stratagemheromobile.Screens.Score
 import com.cs467.helldivers2_stratagemheromobile.Screens.StartingScreen
 import com.cs467.helldivers2_stratagemheromobile.model.StratagemInput
 import com.cs467.helldivers2_stratagemheromobile.ui.theme.Helldivers2StratagemHeroMobileTheme
@@ -37,6 +40,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Navigation() {
         val navController = rememberNavController()
+        
         NavHost(navController = navController, startDestination = "starting_screen") {
             composable(route = "starting_screen") {
                 StartingScreen(
@@ -53,7 +57,31 @@ class MainActivity : ComponentActivity() {
                 viewModel.isPlaying = true
                 viewModel.pickStratagems()
                 GameplayScreen(
-                    mainViewModel = viewModel
+                    mainViewModel = viewModel,
+                    navController = navController
+                )
+            }
+            composable(route = "after_round_screen"){
+                viewModel.isPlaying = false
+                viewModel.resetForNewRound()
+                AfterRoundScreen(
+                    roundBonus = 0,
+                    timeBonus = 0,
+                    perfectBonus = 0,
+                    totalScore = viewModel.score,
+                    modifier = Modifier,
+                    navController = navController
+                )
+            }
+
+            composable(route = "game_over_screen"){
+                viewModel.isPlaying = false
+                GameOverScreen(
+                    "Game over",
+                    threeTopScores = listOf<Score>(Score("Player 1", 99990),Score("Player 2" , 99500), Score("Player 3", 95500)),
+                    //Update this to the viewModel Final Score (all the rounds scores added together)
+                    finalScore = Score("Current Player", viewModel.score),
+                    modifier = Modifier
                 )
             }
         }
