@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -70,7 +71,8 @@ class MainActivity : ComponentActivity() {
                     perfectBonus = 0,
                     totalScore = viewModel.score,
                     modifier = Modifier,
-                    navController = navController
+                    navController = navController,
+                    mainViewModel = viewModel
                 )
             }
 
@@ -81,7 +83,9 @@ class MainActivity : ComponentActivity() {
                     threeTopScores = listOf<Score>(Score("Player 1", 99990),Score("Player 2" , 99500), Score("Player 3", 95500)),
                     //Update this to the viewModel Final Score (all the rounds scores added together)
                     finalScore = Score("Current Player", viewModel.score),
-                    modifier = Modifier
+                    modifier = Modifier,
+                    navController = navController,
+                    mainViewModel = viewModel
                 )
             }
         }
