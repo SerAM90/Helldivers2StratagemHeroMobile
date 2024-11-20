@@ -82,4 +82,10 @@ class MainViewModel(): ViewModel() {
     fun resetForNewRound(){
         _roundFinished.value = false
     }
+
+//    fun goToNextRound(){ //check logic and function
+//        round ++
+//        resetForNewRound()
+//        pickStratagems()
+//    }
 }

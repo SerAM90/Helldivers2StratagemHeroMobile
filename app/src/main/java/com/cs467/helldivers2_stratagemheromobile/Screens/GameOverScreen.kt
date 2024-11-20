@@ -4,14 +4,20 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.cs467.helldivers2_stratagemheromobile.MainViewModel
 import com.cs467.helldivers2_stratagemheromobile.R
+import kotlinx.coroutines.delay
 
 //GAME OVER
 //HIGH SCORES
@@ -33,9 +39,20 @@ fun GameOverScreen(
     //This should be a string resource
     gameOverDisplay: String,
     threeTopScores: List<Score>,
-    finalScore: Score, modifier : Modifier
+    finalScore: Score, modifier : Modifier,
+    navController: NavController,
+    mainViewModel: MainViewModel
 ) {
-    Box(
+    // onClick- so on the GameOverScreen, if you click it will take you back to the StartingScreen
+    Surface(
+        modifier = modifier.fillMaxSize(),
+        onClick = {
+            //Go to the "ready_screen" when clicked
+            navController.navigate("starting_screen") {
+            }
+        }
+    ) {
+        Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
@@ -56,28 +73,31 @@ fun GameOverScreen(
                 fontSize = 25.sp)
             Text(text= "${finalScore.score}",
                 fontSize = 35.sp)
+            }
         }
     }
 }
 
 // And update the preview accordingly
-@Preview(showBackground = true)
-@Composable
-fun GameOverScreenPreview() {
-    val topScores = listOf(
-        Score("1. Tater Salad", 1500),
-        Score("2. Pasta Salad", 1200),
-        Score("3. Chicken Salad", 900)
-    )
-
-    val finalScoreText = stringResource(id = R.string.your_final_score)
-
-    val finalScore = Score(finalScoreText, 200)
-
-    GameOverScreen(
-        gameOverDisplay = stringResource(id = R.string.game_over),
-        threeTopScores = topScores,
-        finalScore = finalScore,
-        modifier = Modifier
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GameOverScreenPreview() {
+//    val topScores = listOf(
+//        Score("1. Tater Salad", 1500),
+//        Score("2. Pasta Salad", 1200),
+//        Score("3. Chicken Salad", 900)
+//    )
+//
+//    val finalScoreText = stringResource(id = R.string.your_final_score)
+//
+//    val finalScore = Score(finalScoreText, 200)
+//
+//    GameOverScreen(
+//        gameOverDisplay = stringResource(id = R.string.game_over),
+//        threeTopScores = topScores,
+//        finalScore = finalScore,
+//        modifier = Modifier,
+//        mainViewModel = MainViewModel(),
+//        navController = rememberNavController()
+//    )
+//}

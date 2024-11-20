@@ -105,7 +105,13 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
  */
  @Composable
 fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, navController: NavController) {
-
+    // Logging the current stratagems
+    stratagems.forEachIndexed { index, stratagem ->
+        Log.d("StratagemDisplay", "Stratagem #$index:")
+        Log.d("StratagemDisplay", "  Name: ${stratagem.stratagemName}")
+        Log.d("StratagemDisplay", "  Image Resource: ${stratagem.imageResourceName}")
+        Log.d("StratagemDisplay", "  Expected Input: ${stratagem.stratagemInputExpected}")
+    }
     val inputToResourceMap = StratagemListUtil().getInputToResourceMap(LocalContext.current)
     val stratagem = stratagems.last()
 
@@ -170,7 +176,7 @@ fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, navControll
 
         // Timer
         Timer(
-            totalTime = 10L * 1000L, //10 secd is 10L * 1000L
+            totalTime = 10L * 1000L, //10 seconds is 10L * 1000L **Test on 100L * 1000L
             modifier = Modifier,
             stratagemCount = stratagems.size,
             navController = navController
