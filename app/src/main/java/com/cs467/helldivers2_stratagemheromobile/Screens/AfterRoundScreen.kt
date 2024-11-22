@@ -40,7 +40,7 @@ fun AfterRoundScreen(
 ) {
     // Trigger navigation to the GameplayScreen after 2 seconds
     LaunchedEffect(true) {
-        delay(2000)
+        delay(2000) //default is 2000, 5000 for testing- SLOW TIME BETWEEN TRANSITION FOR MATH CHECK******************
         mainViewModel.goToNextRound() //goes to the next round for continued play- increases the round, and stratagems displayed per pickStratagems() function
         navController.navigate("ready_screen") {
             popUpTo("after_round_screen") { inclusive = true }

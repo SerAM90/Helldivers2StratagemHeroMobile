@@ -59,13 +59,15 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
     val stratagems = mainViewModel.stratagems
     val correctCount = mainViewModel.correctCount
     val roundFinished by mainViewModel.roundFinished.collectAsState()
-
+    var currentTimeRemaining by remember { mutableStateOf(0L) } //track time
     LaunchedEffect(roundFinished){
         if(roundFinished){
+            val timeBonus = ((currentTimeRemaining.toFloat() / (10L * 1000L)) * 100).toInt() //timer should be default 10 seconds during gameplay
             val roundBonus = mainViewModel.roundBonusScore()
-            mainViewModel.score += roundBonus
-            navController.navigate("after_round_screen?roundBonus=$roundBonus")
-        }
+            mainViewModel.score += roundBonus + timeBonus
+            navController.navigate(
+                "after_round_screen?roundBonus=$roundBonus&timeBonus=$timeBonus"
+            )}
     }
     Column(
         modifier = Modifier
@@ -86,7 +88,8 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
                 }
             }
 
-            StratagemDisplay(stratagems = stratagems, correctCount = correctCount, navController)
+            StratagemDisplay(stratagems = stratagems, correctCount = correctCount, currentTimeRemaining = currentTimeRemaining,
+                onTimeUpdate = { remainingTime -> currentTimeRemaining = remainingTime }, navController)
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -106,7 +109,7 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
  * The StratagemDisplay function below displays our Stratagems from the StratagemListUtil file. Each Stratagem has an associated name, image, and expected input that is needed for the stratagem.
  */
  @Composable
-fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, navController: NavController) {
+fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, currentTimeRemaining: Long, onTimeUpdate: (Long) -> Unit, navController: NavController) {
     // Logging the current stratagems
 //    stratagems.forEachIndexed { index, stratagem ->
 //        Log.d("StratagemDisplay", "Stratagem #$index:")
@@ -181,7 +184,8 @@ fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, navControll
             totalTime = 10L * 1000L, //10 seconds is 10L * 1000L **Test on 100L * 1000L
             modifier = Modifier,
             stratagemCount = stratagems.size,
-            navController = navController
+            navController = navController,
+            timeUpdate = onTimeUpdate
         )
     }
 }
@@ -195,7 +199,8 @@ fun Timer (
     activeBarColor: Color = Color.Yellow,
     initialValue: Float = 1.0f,
     strokeWidth: Dp = 15.dp,
-    navController: NavController
+    navController: NavController,
+    timeUpdate: (Long) -> Unit
 ) {
     var size by remember {
         mutableStateOf(IntSize.Zero)
@@ -222,6 +227,7 @@ fun Timer (
             delay(50L)
             currentTime -= 50L
             value = currentTime / totalTime.toFloat()
+            timeUpdate(currentTime)
         } else if (currentTime <= 0) {
             isTimerRunning = false
             navController.navigate("game_over_screen")
