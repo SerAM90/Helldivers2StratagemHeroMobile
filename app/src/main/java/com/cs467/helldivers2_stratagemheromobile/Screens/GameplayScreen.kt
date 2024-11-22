@@ -62,7 +62,9 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
 
     LaunchedEffect(roundFinished){
         if(roundFinished){
-            navController.navigate("after_round_screen")
+            val roundBonus = mainViewModel.roundBonusScore()
+            mainViewModel.score += roundBonus
+            navController.navigate("after_round_screen?roundBonus=$roundBonus")
         }
     }
     Column(

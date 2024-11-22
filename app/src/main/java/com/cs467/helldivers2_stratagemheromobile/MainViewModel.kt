@@ -23,7 +23,6 @@ class MainViewModel(): ViewModel() {
     var isPlaying by mutableStateOf(false)
 
     var score by mutableIntStateOf(0)
-        private set
 
     var round by mutableIntStateOf(1)
         private set
@@ -85,5 +84,9 @@ class MainViewModel(): ViewModel() {
 
     fun goToNextRound(){ //increase the round by 1
         round ++
+    }
+
+    fun roundBonusScore(): Int {
+        return 75 + (round - 1) * 25
     }
 }
