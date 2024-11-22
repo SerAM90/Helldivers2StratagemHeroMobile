@@ -41,7 +41,8 @@ fun AfterRoundScreen(
     // Trigger navigation to the GameplayScreen after 2 seconds
     LaunchedEffect(true) {
         delay(2000)
-        navController.navigate("gameplay_screen") {
+        mainViewModel.goToNextRound() //goes to the next round for continued play- increases the round, and stratagems displayed per pickStratagems() function
+        navController.navigate("ready_screen") {
             popUpTo("after_round_screen") { inclusive = true }
         }
     }
