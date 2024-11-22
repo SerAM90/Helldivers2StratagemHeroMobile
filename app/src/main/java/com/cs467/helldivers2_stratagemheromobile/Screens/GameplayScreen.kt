@@ -106,12 +106,12 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
  @Composable
 fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, navController: NavController) {
     // Logging the current stratagems
-    stratagems.forEachIndexed { index, stratagem ->
-        Log.d("StratagemDisplay", "Stratagem #$index:")
-        Log.d("StratagemDisplay", "  Name: ${stratagem.stratagemName}")
-        Log.d("StratagemDisplay", "  Image Resource: ${stratagem.imageResourceName}")
-        Log.d("StratagemDisplay", "  Expected Input: ${stratagem.stratagemInputExpected}")
-    }
+//    stratagems.forEachIndexed { index, stratagem ->
+//        Log.d("StratagemDisplay", "Stratagem #$index:")
+//        Log.d("StratagemDisplay", "  Name: ${stratagem.stratagemName}")
+//        Log.d("StratagemDisplay", "  Image Resource: ${stratagem.imageResourceName}")
+//        Log.d("StratagemDisplay", "  Expected Input: ${stratagem.stratagemInputExpected}")
+//    }
     val inputToResourceMap = StratagemListUtil().getInputToResourceMap(LocalContext.current)
     val stratagem = stratagems.last()
 

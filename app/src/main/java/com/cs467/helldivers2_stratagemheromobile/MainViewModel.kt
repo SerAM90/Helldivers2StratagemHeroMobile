@@ -83,9 +83,7 @@ class MainViewModel(): ViewModel() {
         _roundFinished.value = false
     }
 
-//    fun goToNextRound(){ //check logic and function
-//        round ++
-//        resetForNewRound()
-//        pickStratagems()
-//    }
+    fun goToNextRound(){ //increase the round by 1
+        round ++
+    }
 }

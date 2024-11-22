@@ -65,6 +65,7 @@ class MainActivity : ComponentActivity() {
             composable(route = "after_round_screen"){
                 viewModel.isPlaying = false
                 viewModel.resetForNewRound()
+
                 AfterRoundScreen(
                     roundBonus = 0,
                     timeBonus = 0,
@@ -73,7 +74,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier,
                     navController = navController,
                     mainViewModel = viewModel
+
                 )
+
             }
 
             composable(route = "game_over_screen"){
