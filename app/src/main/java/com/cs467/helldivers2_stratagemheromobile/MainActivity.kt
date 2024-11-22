@@ -14,9 +14,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.cs467.helldivers2_stratagemheromobile.Screens.AfterRoundScreen
 import com.cs467.helldivers2_stratagemheromobile.Screens.GameOverScreen
 import com.cs467.helldivers2_stratagemheromobile.Screens.GameplayScreen
@@ -62,21 +64,23 @@ class MainActivity : ComponentActivity() {
                     navController = navController
                 )
             }
-            composable(route = "after_round_screen"){
+            composable(
+                route = "after_round_screen?roundBonus={roundBonus}",
+                arguments = listOf(navArgument("roundBonus") { type = NavType.IntType })
+            ) {
+                val roundBonus = it.arguments?.getInt("roundBonus") ?: 0
                 viewModel.isPlaying = false
                 viewModel.resetForNewRound()
 
                 AfterRoundScreen(
-                    roundBonus = 0,
+                    roundBonus = roundBonus,
                     timeBonus = 0,
                     perfectBonus = 0,
                     totalScore = viewModel.score,
                     modifier = Modifier,
                     navController = navController,
                     mainViewModel = viewModel
-
                 )
-
             }
 
             composable(route = "game_over_screen"){
