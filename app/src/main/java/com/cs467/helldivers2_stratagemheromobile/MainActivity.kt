@@ -65,16 +65,19 @@ class MainActivity : ComponentActivity() {
                 )
             }
             composable(
-                route = "after_round_screen?roundBonus={roundBonus}",
-                arguments = listOf(navArgument("roundBonus") { type = NavType.IntType })
+                route = "after_round_screen?roundBonus={roundBonus}&timeBonus={timeBonus}",
+                arguments = listOf(navArgument("roundBonus") { type = NavType.IntType },
+                    navArgument("timeBonus") { type = NavType.IntType })
             ) {
                 val roundBonus = it.arguments?.getInt("roundBonus") ?: 0
+                val timeBonus = it.arguments?.getInt("timeBonus") ?: 0
+
                 viewModel.isPlaying = false
                 viewModel.resetForNewRound()
 
                 AfterRoundScreen(
                     roundBonus = roundBonus,
-                    timeBonus = 0,
+                    timeBonus = timeBonus,
                     perfectBonus = 0,
                     totalScore = viewModel.score,
                     modifier = Modifier,
