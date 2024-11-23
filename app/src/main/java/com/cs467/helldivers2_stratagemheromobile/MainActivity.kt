@@ -3,6 +3,7 @@ package com.cs467.helldivers2_stratagemheromobile
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -65,12 +66,15 @@ class MainActivity : ComponentActivity() {
                 )
             }
             composable(
-                route = "after_round_screen?roundBonus={roundBonus}&timeBonus={timeBonus}",
+                route = "after_round_screen?roundBonus={roundBonus}&timeBonus={timeBonus}&perfectBonus={perfectBonus}",
                 arguments = listOf(navArgument("roundBonus") { type = NavType.IntType },
-                    navArgument("timeBonus") { type = NavType.IntType })
+                    navArgument("timeBonus") { type = NavType.IntType },
+                    navArgument("perfectBonus") {type = NavType.IntType}
+                )
             ) {
                 val roundBonus = it.arguments?.getInt("roundBonus") ?: 0
                 val timeBonus = it.arguments?.getInt("timeBonus") ?: 0
+                val perfectBonus = it.arguments?.getInt("perfectBonus") ?: 0
 
                 viewModel.isPlaying = false
                 viewModel.resetForNewRound()
@@ -78,7 +82,7 @@ class MainActivity : ComponentActivity() {
                 AfterRoundScreen(
                     roundBonus = roundBonus,
                     timeBonus = timeBonus,
-                    perfectBonus = 0,
+                    perfectBonus = perfectBonus,
                     totalScore = viewModel.score,
                     modifier = Modifier,
                     navController = navController,
@@ -104,6 +108,9 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Hide the status bar and action bar
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
         setContent {
             Helldivers2StratagemHeroMobileTheme {
                 Surface(
