@@ -33,7 +33,10 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
@@ -64,10 +67,17 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
         if(roundFinished){
             val timeBonus = ((currentTimeRemaining.toFloat() / (10L * 1000L)) * 100).toInt() //timer should be default 10 seconds during gameplay
             val roundBonus = mainViewModel.roundBonusScore()
-            mainViewModel.score += roundBonus + timeBonus
+            val perfectBonus = mainViewModel.roundPerfectBonusScore()
+//            if (mainViewModel.perfectRound){
+//                perfectBonus = 100 //flat bonus of 100 points
+//            }
+            mainViewModel.score += roundBonus + timeBonus + perfectBonus
             navController.navigate(
-                "after_round_screen?roundBonus=$roundBonus&timeBonus=$timeBonus"
-            )}
+                "after_round_screen?roundBonus=$roundBonus&timeBonus=$timeBonus&perfectBonus=$perfectBonus"
+
+            )
+            Log.d("PerfectRound", "At the end of round ${mainViewModel.round}, perfectRound = ${mainViewModel.perfectRound}")
+        }
     }
     Column(
         modifier = Modifier
@@ -92,13 +102,26 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
                 onTimeUpdate = { remainingTime -> currentTimeRemaining = remainingTime }, navController)
 
             Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Top,
+                modifier = Modifier
+                    .fillMaxWidth(0.50f)
+                    .padding(horizontal = 10.dp),
+                horizontalAlignment = Alignment.End
             ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // value for score is white
+                    Text(
+                        text = "${mainViewModel.score}",
+                        color = Color.Yellow,
+                        fontSize = 30.sp
+                    )
+                }
+                // word score is yellow
                 Text(
-                    text = stringResource(id = R.string.score) + " ${mainViewModel.score}",
-                    color = Color.White
+                    text = stringResource(id = R.string.score),
+                    color = Color.White,
+                    fontSize = 15.sp
                 )
             }
         }
@@ -159,7 +182,8 @@ fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, currentTime
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                text = stringResource(id = stratagem.stratagemNameResourceID)
+                text = stringResource(id = stratagem.stratagemNameResourceID),
+                color = Color.Black
             )
         }
 

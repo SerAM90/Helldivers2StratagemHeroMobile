@@ -27,6 +27,9 @@ class MainViewModel(): ViewModel() {
     var round by mutableIntStateOf(1)
         private set
 
+    var perfectRound by mutableStateOf(true) //track a perfect found->perfect round flag
+        private set
+
     // This holds the list of stratagems for the round
     private val _stratagems = mutableStateListOf<Stratagem>()
     val stratagems: List<Stratagem> = _stratagems
@@ -75,11 +78,19 @@ class MainViewModel(): ViewModel() {
 
         } else { // Incorrect swipe
             correctCount = 0
+            perfectRound = false //messed up the input->not a perfect round flag
+            Log.d("PerfectRound", "Swipe incorrect, setting perfectRound to false")
+
         }
     }
 
     fun resetForNewRound(){
         _roundFinished.value = false
+        perfectRound = true
+        Log.d("PerfectRound", "Resetting for new round, setting perfectRound to true")
+        Log.d("PerfectRound", "Reset for new round. Perfect round = $perfectRound")
+
+
     }
 
     fun goToNextRound(){ //increase the round by 1
@@ -88,5 +99,8 @@ class MainViewModel(): ViewModel() {
 
     fun roundBonusScore(): Int {
         return 75 + (round - 1) * 25
+    }
+    fun roundPerfectBonusScore(): Int{
+        return if (perfectRound) 100 else 0
     }
 }
