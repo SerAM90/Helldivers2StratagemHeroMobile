@@ -77,6 +77,7 @@ class MainActivity : ComponentActivity() {
 
                 viewModel.isPlaying = false
                 viewModel.resetForNewRound()
+                //viewModel.score = 0 //reset score to 0
 
                 AfterRoundScreen(
                     roundBonus = roundBonus,

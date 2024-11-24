@@ -154,7 +154,7 @@ fun StratagemDisplay(mainViewModel: MainViewModel, currentTimeRemaining: Long, o
                 contentDescription = null, // Provide a content description for accessibility
                 modifier = Modifier
                     .size(90.dp)
-                    .border(3.dp, Color.Yellow) // Adjust size as needed
+                    .border(3.dp, if (currentTimeRemaining <= 3000L) Color.Red else Color.Yellow)
             )
             // Display the stratagems in queue
             for (i in minOf(stratagems.size - 2, 4) downTo 0) {
@@ -175,6 +175,8 @@ fun StratagemDisplay(mainViewModel: MainViewModel, currentTimeRemaining: Long, o
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.Yellow)
+                .background(if (currentTimeRemaining <= 3000L) Color.Red else Color.Yellow)
+
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
