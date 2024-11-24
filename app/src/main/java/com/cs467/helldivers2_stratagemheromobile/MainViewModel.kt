@@ -78,21 +78,25 @@ class MainViewModel(): ViewModel() {
             correctCount = 0
             wrongInput = true
             perfectRound = false //messed up the input->not a perfect round flag
-            Log.d("PerfectRound", "Swipe incorrect, setting perfectRound to false")
+            //Log.d("PerfectRound", "Swipe incorrect, setting perfectRound to false")
         }
     }
 
     fun resetForNewRound(){
         _roundFinished.value = false
         perfectRound = true
-        Log.d("PerfectRound", "Resetting for new round, setting perfectRound to true")
-        Log.d("PerfectRound", "Reset for new round. Perfect round = $perfectRound")
+        //Log.d("PerfectRound", "Resetting for new round, setting perfectRound to true")
+       // Log.d("PerfectRound", "Reset for new round. Perfect round = $perfectRound")
 
 
     }
 
     fun goToNextRound(){ //increase the round by 1
         round ++
+    }
+
+    fun gameOverRoundReset(){
+        round = 1
     }
 
     fun roundBonusScore(): Int {

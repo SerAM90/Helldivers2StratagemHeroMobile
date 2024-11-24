@@ -91,6 +91,7 @@ class MainActivity : ComponentActivity() {
 
             composable(route = "game_over_screen"){
                 viewModel.isPlaying = false
+                viewModel.gameOverRoundReset()
                 GameOverScreen(
                     "Game over",
                     threeTopScores = listOf<Score>(Score("Player 1", 99990),Score("Player 2" , 99500), Score("Player 3", 95500)),
