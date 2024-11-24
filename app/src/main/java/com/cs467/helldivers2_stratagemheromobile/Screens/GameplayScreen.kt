@@ -68,7 +68,7 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
                 "after_round_screen?roundBonus=$roundBonus&timeBonus=$timeBonus&perfectBonus=$perfectBonus"
 
             )
-            Log.d("PerfectRound", "At the end of round ${mainViewModel.round}, perfectRound = ${mainViewModel.perfectRound}")
+            //Log.d("PerfectRound", "At the end of round ${mainViewModel.round}, perfectRound = ${mainViewModel.perfectRound}")
         }
     }
     Column(
