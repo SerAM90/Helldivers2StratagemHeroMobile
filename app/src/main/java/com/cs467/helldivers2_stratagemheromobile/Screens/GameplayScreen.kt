@@ -1,7 +1,5 @@
 package com.cs467.helldivers2_stratagemheromobile.Screens
 
-import android.util.Log
-import androidx.activity.viewModels
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -42,15 +40,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.cs467.helldivers2_stratagemheromobile.MainViewModel
 import com.cs467.helldivers2_stratagemheromobile.R
 import com.cs467.helldivers2_stratagemheromobile.Util.StratagemListUtil
-import com.cs467.helldivers2_stratagemheromobile.model.Stratagem
 import kotlinx.coroutines.delay
 
 /**
@@ -59,8 +53,6 @@ import kotlinx.coroutines.delay
  */
 @Composable
 fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
-    val stratagems = mainViewModel.stratagems
-    val correctCount = mainViewModel.correctCount
     val roundFinished by mainViewModel.roundFinished.collectAsState()
     var currentTimeRemaining by remember { mutableStateOf(0L) } //track time
     LaunchedEffect(roundFinished){
@@ -98,7 +90,7 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
                 }
             }
 
-            StratagemDisplay(stratagems = stratagems, correctCount = correctCount, currentTimeRemaining = currentTimeRemaining,
+            StratagemDisplay(mainViewModel = mainViewModel, currentTimeRemaining = currentTimeRemaining,
                 onTimeUpdate = { remainingTime -> currentTimeRemaining = remainingTime }, navController)
 
             Column(
@@ -131,17 +123,22 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
 /**
  * The StratagemDisplay function below displays our Stratagems from the StratagemListUtil file. Each Stratagem has an associated name, image, and expected input that is needed for the stratagem.
  */
- @Composable
-fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, currentTimeRemaining: Long, onTimeUpdate: (Long) -> Unit, navController: NavController) {
-    // Logging the current stratagems
-//    stratagems.forEachIndexed { index, stratagem ->
-//        Log.d("StratagemDisplay", "Stratagem #$index:")
-//        Log.d("StratagemDisplay", "  Name: ${stratagem.stratagemName}")
-//        Log.d("StratagemDisplay", "  Image Resource: ${stratagem.imageResourceName}")
-//        Log.d("StratagemDisplay", "  Expected Input: ${stratagem.stratagemInputExpected}")
-//    }
+@Composable
+fun StratagemDisplay(mainViewModel: MainViewModel, currentTimeRemaining: Long, onTimeUpdate: (Long) -> Unit, navController: NavController) {
+    val stratagems = mainViewModel.stratagems
+    val correctCount = mainViewModel.correctCount
+    val wrongInput = mainViewModel.wrongInput
+
     val inputToResourceMap = StratagemListUtil().getInputToResourceMap(LocalContext.current)
     val stratagem = stratagems.last()
+
+    // This is used for the red arrow effect when there is an incorrect swipe
+    LaunchedEffect(key1 = wrongInput) {
+        if (wrongInput) {
+            delay(175L) // how long to make the red arrow effect last
+            mainViewModel.wrongInput = false
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxWidth(0.75f),
@@ -187,19 +184,27 @@ fun StratagemDisplay(stratagems: List<Stratagem>, correctCount: Int, currentTime
             )
         }
 
-
         // Expected input (arrows)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
             stratagem.stratagemInputExpected.forEachIndexed { index, stratagemInput ->
-                Image(
-                    painter = painterResource(id = inputToResourceMap[stratagemInput]!!),
-                    contentDescription = null, // Provide a content description for accessibility
-                    modifier = Modifier.size(40.dp), // Adjust size as needed
-                    colorFilter = if (index + 1 <= correctCount) ColorFilter.tint(color = Color.Yellow) else null
-                )
+                if (wrongInput) {
+                    Image(
+                        painter = painterResource(id = inputToResourceMap[stratagemInput]!!),
+                        contentDescription = null, // Provide a content description for accessibility
+                        modifier = Modifier.size(40.dp), // Adjust size as needed
+                        colorFilter = ColorFilter.tint(color = Color.Red)
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = inputToResourceMap[stratagemInput]!!),
+                        contentDescription = null, // Provide a content description for accessibility
+                        modifier = Modifier.size(40.dp), // Adjust size as needed
+                        colorFilter = if (index + 1 <= correctCount) ColorFilter.tint(color = Color.Yellow) else null
+                    )
+                }
             }
         }
 
@@ -220,7 +225,6 @@ fun Timer (
     modifier: Modifier,
     stratagemCount: Int,
     inactiveBarColor: Color = Color.LightGray,
-    activeBarColor: Color = Color.Yellow,
     initialValue: Float = 1.0f,
     strokeWidth: Dp = 15.dp,
     navController: NavController,
@@ -238,6 +242,9 @@ fun Timer (
     var isTimerRunning by remember {
         mutableStateOf(false)
     }
+    var activeBarColor by remember {
+        mutableStateOf(Color.Yellow)
+    }
 
     // This function runs only once in the beginning and starts the timer
     LaunchedEffect(Unit) {
@@ -252,6 +259,11 @@ fun Timer (
             currentTime -= 50L
             value = currentTime / totalTime.toFloat()
             timeUpdate(currentTime)
+            activeBarColor = if (currentTime > 3000L) {
+                Color.Yellow
+            } else {
+                Color.Red
+            }
         } else if (currentTime <= 0) {
             isTimerRunning = false
             navController.navigate("game_over_screen")
