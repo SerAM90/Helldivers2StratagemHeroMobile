@@ -46,6 +46,7 @@ class MainActivity : ComponentActivity() {
         
         NavHost(navController = navController, startDestination = "starting_screen") {
             composable(route = "starting_screen") {
+                viewModel.score = 0
                 StartingScreen(
                     navController = navController
                 )
