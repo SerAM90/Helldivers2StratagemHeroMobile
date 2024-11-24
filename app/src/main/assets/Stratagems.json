@@ -592,10 +592,22 @@
     ]
   },
   {
-    "stratagemName": "shieldgeneratorbackpack",
-    "imageResourceName": "shieldgeneratorbackpack",
+    "stratagemName": "shieldgeneratorpack",
+    "imageResourceName": "shieldgeneratorpack",
     "stratagemInputExpected": ["DOWN",
       "UP",
+      "LEFT",
+      "RIGHT",
+      "LEFT",
+      "RIGHT"
+
+    ]
+  },
+  {
+    "stratagemName": "shieldgeneratorrelay",
+    "imageResourceName": "shieldgeneratorrelay",
+    "stratagemInputExpected": ["DOWN",
+      "DOWN",
       "LEFT",
       "RIGHT",
       "LEFT",
