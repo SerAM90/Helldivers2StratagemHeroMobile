@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -17,7 +18,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.cs467.helldivers2_stratagemheromobile.MainViewModel
 import com.cs467.helldivers2_stratagemheromobile.R
+import com.cs467.helldivers2_stratagemheromobile.data.HighScoreDao
+import com.cs467.helldivers2_stratagemheromobile.data.HighScoreDatabase
+import com.cs467.helldivers2_stratagemheromobile.data.HighScoreEntity
 import kotlinx.coroutines.delay
+import kotlin.random.Random
 
 //GAME OVER
 //HIGH SCORES
@@ -38,11 +43,13 @@ data class Score(val playerName: String, val score: Int)
 fun GameOverScreen(
     //This should be a string resource
     gameOverDisplay: String,
-    threeTopScores: List<Score>,
-    finalScore: Score, modifier : Modifier,
+    threeTopScores: List<HighScoreEntity>,
+    finalScore: HighScoreEntity,
+    modifier : Modifier,
     navController: NavController,
     mainViewModel: MainViewModel
 ) {
+    //val context = LocalContext.current
     // onClick- so on the GameOverScreen, if you click it will take you back to the StartingScreen
     Surface(
         modifier = modifier.fillMaxSize(),
@@ -65,13 +72,13 @@ fun GameOverScreen(
             Text(text = stringResource(id = R.string.high_scores),
                 fontSize = 30.sp)
             for (score in threeTopScores) {
-                Text(text = "${score.playerName} | ${score.score}",
+                Text(text = "${score.playerName} | ${score.playerScore}",
                     fontSize = 25.sp)
             }
 
             Text(text = "${finalScore.playerName} ",
                 fontSize = 25.sp)
-            Text(text= "${finalScore.score}",
+            Text(text= "${finalScore.playerScore}",
                 fontSize = 35.sp)
             }
         }

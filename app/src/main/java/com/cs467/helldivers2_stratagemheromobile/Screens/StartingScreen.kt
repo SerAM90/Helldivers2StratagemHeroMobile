@@ -1,5 +1,6 @@
 package com.cs467.helldivers2_stratagemheromobile.Screens
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,10 +27,16 @@ import com.cs467.helldivers2_stratagemheromobile.R
 fun StartingScreen(
     navController: NavController
 ) {
-
+    val context = LocalContext.current
     Surface(
         onClick = {
             navController.navigate("ready_screen")
+            var mediaPlayer = MediaPlayer.create(context, R.raw.start) // Add a sound file in 'res/raw'
+            mediaPlayer?.start()
+            mediaPlayer?.setOnCompletionListener {
+                it.reset()
+                it.release() // Release the MediaPlayer when the sound is done
+            }
         }
     ) {
         Column(

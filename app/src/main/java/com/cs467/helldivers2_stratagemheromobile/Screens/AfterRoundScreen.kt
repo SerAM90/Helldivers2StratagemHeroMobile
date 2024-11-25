@@ -1,5 +1,6 @@
 package com.cs467.helldivers2_stratagemheromobile.Screens
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -38,8 +40,15 @@ fun AfterRoundScreen(
     navController: NavController,
     mainViewModel: MainViewModel
 ) {
+    val context = LocalContext.current
     // Trigger navigation to the GameplayScreen after 2 seconds
     LaunchedEffect(true) {
+        val mediaPlayer = MediaPlayer.create(context, R.raw.sound_end_round_triple_score) // Add a sound file in 'res/raw'
+        mediaPlayer?.start()
+        mediaPlayer?.setOnCompletionListener {
+            it.reset()
+            it.release() // Release the MediaPlayer when the sound is done
+        }
         delay(2000) //default is 2000, 5000 for testing- SLOW TIME BETWEEN TRANSITION FOR MATH CHECK******************
         mainViewModel.goToNextRound() //goes to the next round for continued play- increases the round, and stratagems displayed per pickStratagems() function
         navController.navigate("ready_screen") {
