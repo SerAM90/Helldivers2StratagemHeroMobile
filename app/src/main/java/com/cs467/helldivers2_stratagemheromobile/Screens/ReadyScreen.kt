@@ -1,5 +1,6 @@
 package com.cs467.helldivers2_stratagemheromobile.Screens
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -29,8 +31,16 @@ import kotlinx.coroutines.delay
          */
 fun ReadyScreen(roundNumber: Int, navController: NavController)
 {
+    val context = LocalContext.current
     // This creates a 2s delay from the ready screen to the gameplay screen
     LaunchedEffect(true) {
+        delay(1000)
+        val mediaPlayer = MediaPlayer.create(context, R.raw.sound_round_start) // Add a sound file in 'res/raw'
+        mediaPlayer?.start()
+        mediaPlayer?.setOnCompletionListener {
+            it.reset()
+            it.release() // Release the MediaPlayer when the sound is done
+        }
         delay(2000)
         navController.navigate("gameplay_screen")
     }

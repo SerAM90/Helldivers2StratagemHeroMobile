@@ -1,5 +1,7 @@
 package com.cs467.helldivers2_stratagemheromobile
 
+import android.content.Context
+import android.media.MediaPlayer
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -10,6 +12,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.cs467.helldivers2_stratagemheromobile.model.Stratagem
@@ -36,7 +41,15 @@ class MainViewModel(): ViewModel() {
     
     private val _roundFinished = MutableStateFlow<Boolean>(false)
     val roundFinished: StateFlow<Boolean> = _roundFinished.asStateFlow()
-    
+
+    private val _playSoundEvent = MutableLiveData<Boolean>()
+    val playSoundEvent: LiveData<Boolean> get() = _playSoundEvent
+    var soundToPlay = R.raw.sound_press_1
+
+    // Call this method to trigger sound playback
+    fun onSoundTriggered(state: Boolean) {
+        _playSoundEvent.value = state
+    }
 
     @Composable
     fun pickStratagems() {
@@ -53,14 +66,19 @@ class MainViewModel(): ViewModel() {
         // We check from back to front because it is more efficient to pop the last element in the
         // stratagems array than to remove the first and reorder the queue
         val currentStratagem = stratagems.last()
+        //val mediaPlayer = MediaPlayer.create(context, R.raw.sound_press_1)
 
         // Correct swipe
         if (direction == currentStratagem.stratagemInputExpected[correctCount]) {
             correctCount++
+            soundToPlay = R.raw.sound_press_1
+            onSoundTriggered(true)
 
             // We have completed all swipes for the current stratagem and need to move on to the
             // next one
             if (correctCount == currentStratagem.stratagemInputExpected.size) {
+                soundToPlay = R.raw.sound_stratagem_input_finished
+                onSoundTriggered(true)
                 // Update score
                 score += currentStratagem.stratagemInputExpected.size * 5
                 if (_stratagems.size == 1) {
@@ -75,6 +93,8 @@ class MainViewModel(): ViewModel() {
 
         } else { // Incorrect swipe
             correctCount = 0
+            soundToPlay = R.raw.sound_input_error
+            onSoundTriggered(true)
         }
     }
 
