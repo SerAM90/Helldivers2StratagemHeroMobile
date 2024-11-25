@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -14,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -65,6 +68,7 @@ class MainActivity : ComponentActivity() {
         
         NavHost(navController = navController, startDestination = "starting_screen") {
             composable(route = "starting_screen") {
+                viewModel.score = 0
                 StartingScreen(
                     navController = navController
                 )
@@ -97,26 +101,28 @@ class MainActivity : ComponentActivity() {
                 )
             }
             composable(
-                route = "after_round_screen?roundBonus={roundBonus}&timeBonus={timeBonus}",
+                route = "after_round_screen?roundBonus={roundBonus}&timeBonus={timeBonus}&perfectBonus={perfectBonus}",
                 arguments = listOf(navArgument("roundBonus") { type = NavType.IntType },
-                    navArgument("timeBonus") { type = NavType.IntType })
+                    navArgument("timeBonus") { type = NavType.IntType },
+                    navArgument("perfectBonus") {type = NavType.IntType}
+                )
             ) {
                 val roundBonus = it.arguments?.getInt("roundBonus") ?: 0
                 val timeBonus = it.arguments?.getInt("timeBonus") ?: 0
+                val perfectBonus = it.arguments?.getInt("perfectBonus") ?: 0
 
                 viewModel.isPlaying = false
                 viewModel.resetForNewRound()
+
                 onPause()
-                //addFinalScore = true
-                //if (dewIt) {
-                //playTransition(R.raw.sound_end_round_triple_score)
-                //    dewIt = false
-                //}
+
+                //viewModel.score = 0 //reset score to 0
+
 
                 AfterRoundScreen(
                     roundBonus = roundBonus,
                     timeBonus = timeBonus,
-                    perfectBonus = 0,
+                    perfectBonus = perfectBonus,
                     totalScore = viewModel.score,
                     modifier = Modifier,
                     navController = navController,
@@ -132,6 +138,9 @@ class MainActivity : ComponentActivity() {
                     highScoreDao.insertScore(HighScoreEntity(playerName = giveRandName(), playerScore = viewModel.score))
                     addFinalScore = false
                 }
+
+                viewModel.gameOverRoundReset()
+
                 GameOverScreen(
                     "Game over",
                     //threeTopScores = listOf<Score>(Score("Player 1", 99990),Score("Player 2" , 99500), Score("Player 3", 95500)),
@@ -166,7 +175,9 @@ class MainActivity : ComponentActivity() {
 //                Log.e("DatabaseError", "Error inserting data: ${e.message}")
 //            }
 //        }
-
+        // Hide the status bar and action bar
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
         setContent {
             Helldivers2StratagemHeroMobileTheme {
                 Surface(
@@ -198,55 +209,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Navigation()
-                        /*
-                        GameScreen(
-                            game round initialization
-                                initialize timer to starting time (~20 sec)
-                                initialize total score to 0
-
-                            execute function to constantly decrement timer
-                            set rounds completed to 0
-
-                            while timer > 0
-                                randomly select stratagems equal in number to rounds completed + 6
-                                    add each one to a list
-                                set # of stratagems left equal to round strat count
-                                set round score to 0
-                                set perfect count to 0
-                                while # of stratagems left > 0
-                                    select and display next stratagem from list
-                                    set arrows complete to 0
-                                    while stratagem incomplete
-                                        if user input matches current arrow
-                                            move to next arrow
-                                            increment arrows complete by 1
-                                        else
-                                            display incorrect
-                                            restart stratagem sequence
-                                    increment timer by 2 seconds
-                                    multiply arrows complete by 5 & add to round score
-                                    if no mistakes in inputs for last stratagem
-                                        increment perfect count by 1
-                                    decrement stratagems left by 1
-
-                                if perfect count = rounds completed + 6
-                                    add 100 to round score
-                                calculate percent of timer left at round end
-                                    multiply by 100 and add to round score
-                                add 75 + rounds completed to round score
-                                add round score to total score
-                                increment rounds completed by 1
-
-                            display game over screen
-                                display total score
-                                display rounds completed
-                                give player option to enter name for high score
-
-                            add player name, high score as tuple into high score database
-                                insert at correct position in list of scores sorted by descending order
-                        )
-                         */
-
                 }
             }
 

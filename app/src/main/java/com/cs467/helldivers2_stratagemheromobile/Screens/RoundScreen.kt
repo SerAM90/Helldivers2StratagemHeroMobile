@@ -1,2 +1,0 @@
-package com.cs467.helldivers2_stratagemheromobile.Screens
-

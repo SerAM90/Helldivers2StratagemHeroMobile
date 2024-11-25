@@ -4,8 +4,6 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -16,7 +14,6 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import com.cs467.helldivers2_stratagemheromobile.model.Stratagem
 import com.cs467.helldivers2_stratagemheromobile.Util.StratagemListUtil
 import com.cs467.helldivers2_stratagemheromobile.model.StratagemInput
@@ -30,6 +27,11 @@ class MainViewModel(): ViewModel() {
     var score by mutableIntStateOf(0)
 
     var round by mutableIntStateOf(1)
+        private set
+
+    var wrongInput by mutableStateOf(false)
+
+    var perfectRound by mutableStateOf(true) //track a perfect found->perfect round flag
         private set
 
     // This holds the list of stratagems for the round
@@ -95,18 +97,33 @@ class MainViewModel(): ViewModel() {
             correctCount = 0
             soundToPlay = R.raw.sound_input_error
             onSoundTriggered(true)
+            wrongInput = true
+            perfectRound = false //messed up the input->not a perfect round flag
+            //Log.d("PerfectRound", "Swipe incorrect, setting perfectRound to false")
         }
     }
 
     fun resetForNewRound(){
         _roundFinished.value = false
+        perfectRound = true
+        //Log.d("PerfectRound", "Resetting for new round, setting perfectRound to true")
+       // Log.d("PerfectRound", "Reset for new round. Perfect round = $perfectRound")
+
+
     }
 
     fun goToNextRound(){ //increase the round by 1
         round ++
     }
 
+    fun gameOverRoundReset(){
+        round = 1
+    }
+
     fun roundBonusScore(): Int {
         return 75 + (round - 1) * 25
+    }
+    fun roundPerfectBonusScore(): Int{
+        return if (perfectRound) 100 else 0
     }
 }
