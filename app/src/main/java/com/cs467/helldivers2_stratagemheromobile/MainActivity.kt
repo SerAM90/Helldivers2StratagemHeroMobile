@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -37,6 +40,7 @@ import com.cs467.helldivers2_stratagemheromobile.data.HighScoreDatabase
 import com.cs467.helldivers2_stratagemheromobile.data.HighScoreEntity
 import com.cs467.helldivers2_stratagemheromobile.model.StratagemInput
 import com.cs467.helldivers2_stratagemheromobile.ui.theme.Helldivers2StratagemHeroMobileTheme
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -51,8 +55,9 @@ class MainActivity : ComponentActivity() {
     private var mediaPlayer: MediaPlayer? = null
     private var bgMusicPlayer: MediaPlayer? = null
     private var transitionMusicPlayer: MediaPlayer? = null
-    private var dewIt = false
-    private var addFinalScore = false
+    private var soundPlayable = false
+    private var gameInitiated = false
+    private var startAgain = false
     private lateinit var db: HighScoreDatabase
     private lateinit var highScoreDao: HighScoreDao
 
@@ -72,22 +77,17 @@ class MainActivity : ComponentActivity() {
                 StartingScreen(
                     navController = navController
                 )
-                //playTransition(R.raw.start)
+                gameInitiated = true
             }
             composable(route = "ready_screen") {
-                //if (dewIt) {
-                //dewIt = true
-                //playTransition(R.raw.sound_round_start)
-                //    dewIt = false
-                //}
                 ReadyScreen(
                     roundNumber = viewModel.round,
                     navController = navController
                 )
+                startAgain = false
             }
             composable(route = "gameplay_screen") {
-                dewIt = true
-                addFinalScore = true
+                soundPlayable = true
                 if (bgMusicPlayer != null) {
                     onResume()
                 }
@@ -118,7 +118,6 @@ class MainActivity : ComponentActivity() {
 
                 //viewModel.score = 0 //reset score to 0
 
-
                 AfterRoundScreen(
                     roundBonus = roundBonus,
                     timeBonus = timeBonus,
@@ -131,12 +130,20 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(route = "game_over_screen"){
+
                 viewModel.isPlaying = false
                 onStop()
-                playTransition(R.raw.sound_gameover)
-                if(addFinalScore == true){
-                    highScoreDao.insertScore(HighScoreEntity(playerName = giveRandName(), playerScore = viewModel.score))
-                    addFinalScore = false
+
+                //Only enact once if screen refreshes
+                if(gameInitiated && !startAgain){
+                    playTransition(R.raw.sound_gameover)
+                    //No name input popup if no score
+                    if(viewModel.score > 0) {
+                        val rootView: View = findViewById(android.R.id.content)
+                        showEnterNameSnackbar(rootView)
+                    }
+                    gameInitiated = false
+                    startAgain = true
                 }
 
                 viewModel.gameOverRoundReset()
@@ -146,7 +153,7 @@ class MainActivity : ComponentActivity() {
                     //threeTopScores = listOf<Score>(Score("Player 1", 99990),Score("Player 2" , 99500), Score("Player 3", 95500)),
                     threeTopScores = highScoreDao.getTopScores(),
                     //Update this to the viewModel Final Score (all the rounds scores added together)
-                    finalScore = HighScoreEntity(playerName = "John Helldiver", playerScore = viewModel.score),
+                    finalScore = HighScoreEntity(playerName = "Your Score", playerScore = viewModel.score),
                     modifier = Modifier,
                     navController = navController,
                     mainViewModel = viewModel
@@ -157,11 +164,7 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
-        //Test for background music
-        //var mediaPlaya = MediaPlayer.create(this, R.raw.bg1_music)
-        //mediaPlaya.start()
         super.onCreate(savedInstanceState)
-
         db = HighScoreDatabase.getDatabase(this)
         highScoreDao = db.hsDao()
         // Insert sample data and query in a coroutine
@@ -214,7 +217,7 @@ class MainActivity : ComponentActivity() {
 
         }
 
-        // Observe the ViewModel's LiveData
+        //Observe the ViewModel's LiveData to listen for action to play corresponding sound
         viewModel.playSoundEvent.observe(this, Observer { shouldPlay ->
             if (shouldPlay) {
                 playSound(viewModel.soundToPlay)
@@ -224,70 +227,108 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun playSound(beat: Int) {
-        mediaPlayer = MediaPlayer.create(this, beat) // Add a sound file in 'res/raw'
+        //Create MediaPlayer instance and play appropriate sound depending on user input
+        mediaPlayer = MediaPlayer.create(this, beat)
         mediaPlayer?.start()
         mediaPlayer?.setOnCompletionListener {
             it.reset()
-            it.release() // Release the MediaPlayer when the sound is done
+            it.release()
         }
     }
 
     override fun onDestroy() {
+        //Ensure no leakage with proper MediaPlayer object destruction
         super.onDestroy()
-        mediaPlayer?.release() // Make sure to release the MediaPlayer when the Activity is destroyed
+        mediaPlayer?.release()
+    }
+
+    private fun playTransition(riff: Int) {
+        if (soundPlayable) {
+            transitionMusicPlayer = MediaPlayer.create(this, riff)
+            transitionMusicPlayer?.start()
+            transitionMusicPlayer?.setOnCompletionListener {
+                it.reset()
+                it.release()
+            }
+            soundPlayable = false
+        }
     }
 
     private fun playBackgroundMusic() {
-        // Check if the MediaPlayer is already playing
+        //Check if the MediaPlayer is already playing
         if (bgMusicPlayer == null) {
-            // Create the MediaPlayer instance, pointing to your music file in res/raw
             bgMusicPlayer = MediaPlayer.create(this, R.raw.round_music)
-            // Set the looping property to true for continuous playback
             bgMusicPlayer?.isLooping = true
-            // Start playing the music
             bgMusicPlayer?.setVolume(0F, 0.5F)
             bgMusicPlayer?.start()
         }
     }
 
-    private fun playTransition(riff: Int) {
-        if (dewIt) {
-            // Create the MediaPlayer instance, pointing to your music file in res/raw
-            transitionMusicPlayer = MediaPlayer.create(this, riff)
-            // Start playing the music
-            transitionMusicPlayer?.start()
-            transitionMusicPlayer?.setOnCompletionListener {
-                it.reset()
-                it.release() // Release the MediaPlayer when the sound is done
-            }
-            dewIt = false
-        }
-    }
-
     override fun onPause() {
         super.onPause()
-        // Pause the music when the activity goes into the background
+        //Pause the background music
         bgMusicPlayer?.pause()
     }
 
     override fun onResume() {
         super.onResume()
-        // Resume the music when the activity comes back to the foreground
+        //Resume the background music
         bgMusicPlayer?.start()
     }
 
     override fun onStop() {
+        //Stop and release the MediaPlayer to avoid memory leaks
         super.onStop()
-        // Release the MediaPlayer to avoid memory leaks
         //bgMusicPlayer?.reset()
         bgMusicPlayer?.release()
         bgMusicPlayer = null
     }
 
-    private fun giveRandName(): String {
-        val randomNumber = Random.nextInt(0, 999)
-        val newname = "Helldiver_$randomNumber"
-        return newname
+//    private fun giveRandName(): String {
+//        val randomNumber = Random.nextInt(0, 999)
+//        val newname = "Helldiver_$randomNumber"
+//        return newname
+//    }
+
+    private fun showEnterNameSnackbar(view: View) {
+        //Create Snackbar instance and automatically open dialog for name input
+        Snackbar.make(view, "In the name of Liberty - Great Job Helldiver!", Snackbar.LENGTH_LONG).show()
+        showNameInputDialog()
+    }
+
+    private fun showNameInputDialog() {
+        //Pop-up window allowing user to optionally enter name
+        val editText = EditText(this)
+        editText.hint = "Enter your name here"
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Add Your Score")
+            .setMessage("Please enter your name to save your high score:")
+            .setView(editText)
+            //.setCancelable(false)
+            .setPositiveButton("SUBMIT") { _, _ ->
+                val name = editText.text.toString()
+                if (name.isNotBlank()) {
+                    saveNameAndScore(name)
+                } else {
+                    Toast.makeText(this, "Name cannot be empty.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("CANCEL", null)
+            .show()
+            //.create()
+        //dialog.show()
+    }
+
+    private fun saveNameAndScore(name: String) {
+        //Called via Snackbar instance if name provided to insert new HS Entity
+        highScoreDao.insertScore(
+            HighScoreEntity(
+                playerName = name,
+                playerScore = viewModel.score
+            )
+        )
+        Toast.makeText(this, "$name's score has been added!", Toast.LENGTH_SHORT).show()
     }
 
     /**

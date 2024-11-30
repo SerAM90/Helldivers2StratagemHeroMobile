@@ -8,7 +8,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [HighScoreEntity::class], version = 2, exportSchema = false)
+//For testing purposes, need to update version every time new database instance created
+@Database(entities = [HighScoreEntity::class], version = 4, exportSchema = false)
 abstract class HighScoreDatabase : RoomDatabase(){
     abstract fun hsDao():HighScoreDao
 
