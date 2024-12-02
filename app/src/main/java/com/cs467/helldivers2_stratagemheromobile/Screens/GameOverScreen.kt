@@ -72,15 +72,14 @@ fun GameOverScreen(
                 fontSize = 50.sp)
             Text(text = stringResource(id = R.string.high_scores),
                 fontSize = 30.sp)
-            for (score in threeTopScores) {
+            for ((index, score) in threeTopScores.withIndex()) {
                 Row {
                     Text(
-                        text = "${score.playerName} | ${score.playerScore}",
+                        text = "${index + 1}. ${score.playerName} | ${score.playerScore}",
                         fontSize = 25.sp
                     )
                 }
             }
-
             Text(
                 text = stringResource(id = R.string.your_final_score),
                 fontSize = 25.sp
