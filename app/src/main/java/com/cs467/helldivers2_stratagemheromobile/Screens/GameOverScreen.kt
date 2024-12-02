@@ -1,17 +1,25 @@
 package com.cs467.helldivers2_stratagemheromobile.Screens
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -61,56 +69,70 @@ fun GameOverScreen(
         }
     ) {
         Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
+            .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
+        // Background image
+        Image(
+            painter = painterResource(R.drawable.superearthbackground),
+            contentDescription = "Super Earth Logo",
+            modifier = Modifier
+                .fillMaxHeight(0.7f)
+                .fillMaxWidth(),
+            contentScale = ContentScale.FillHeight,
+            colorFilter = ColorFilter.tint(Color.White),
+            alpha = 0.2f
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Text(text = stringResource(id = R.string.game_over),
+                color = Color.White,
                 fontSize = 50.sp)
             Text(text = stringResource(id = R.string.high_scores),
+                color = Color.White,
                 fontSize = 30.sp)
             for ((index, score) in threeTopScores.withIndex()) {
                 Row {
                     Text(
                         text = "${index + 1}. ${score.playerName} | ${score.playerScore}",
+                        color = Color.White,
                         fontSize = 25.sp
                     )
                 }
             }
             Text(
                 text = stringResource(id = R.string.your_final_score),
+                color = Color.White,
                 fontSize = 25.sp
             )
             Text(text= "${finalScore.playerScore}",
+                color = Color.White,
                 fontSize = 35.sp)
             }
         }
     }
 }
 
-// And update the preview accordingly
-//@Preview(showBackground = true)
-//@Composable
-//fun GameOverScreenPreview() {
-//    val topScores = listOf(
-//        Score("1. Tater Salad", 1500),
-//        Score("2. Pasta Salad", 1200),
-//        Score("3. Chicken Salad", 900)
-//    )
-//
-//    val finalScoreText = stringResource(id = R.string.your_final_score)
-//
-//    val finalScore = Score(finalScoreText, 200)
-//
-//    GameOverScreen(
-//        gameOverDisplay = stringResource(id = R.string.game_over),
-//        threeTopScores = topScores,
-//        finalScore = finalScore,
-//        modifier = Modifier,
-//        mainViewModel = MainViewModel(),
-//        navController = rememberNavController()
-//    )
-//}
+@Preview(showBackground = true, widthDp = 800, heightDp = 360)
+@Composable
+fun GameOverScreenPreview() {
+    val topScores = listOf(
+        HighScoreEntity(1, "Tater Salad", 1500),
+        HighScoreEntity(2, "Pasta Salad", 1200),
+        HighScoreEntity(3, "Chicken Salad", 1000)
+    )
+
+    val finalScore = HighScoreEntity(4, "test", 200)
+
+    GameOverScreen(
+        gameOverDisplay = stringResource(id = R.string.game_over),
+        threeTopScores = topScores,
+        finalScore = finalScore,
+        modifier = Modifier,
+        mainViewModel = MainViewModel(),
+        navController = rememberNavController()
+    )
+}

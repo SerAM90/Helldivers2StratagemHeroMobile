@@ -55,14 +55,15 @@ fun StartingScreen(
                     it.reset()
                     it.release() // Release resources when done
                 }
-            }
+            },
+        contentAlignment = Alignment.Center
     ) {
         // Background image
         Image(
             painter = painterResource(R.drawable.superearthbackground),
             contentDescription = "Super Earth Logo",
             modifier = Modifier
-                .fillMaxHeight(0.8f)
+                .fillMaxHeight(0.7f)
                 .fillMaxWidth(),
             contentScale = ContentScale.FillHeight,
             colorFilter = ColorFilter.tint(Color.White),
