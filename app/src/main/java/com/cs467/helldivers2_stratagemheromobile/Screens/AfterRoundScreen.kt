@@ -6,9 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -64,7 +68,7 @@ fun AfterRoundScreen(
         }
     }
 
-    Box(
+    Box( //bg box
         modifier = modifier.fillMaxSize()
             .background(Color.Black),
         contentAlignment = Alignment.Center
@@ -80,34 +84,90 @@ fun AfterRoundScreen(
             colorFilter = ColorFilter.tint(Color.White),
             alpha = 0.15f
         )
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+
+        // Box for score names and values
+        Box(
+            modifier = Modifier
+                .padding(32.dp) // Adds spacing between the box and the screen edges
+                .fillMaxWidth()
+                .background(Color.Black.copy(alpha = 0.6f), shape = RoundedCornerShape(16.dp))
+                .padding(16.dp) // Padding inside the box
         ) {
-            Text(
-                text = stringResource(id = R.string.round_bonus) + " $roundBonus",
-                fontSize = 40.sp,
-                color = Color.White
-            )
-            Text(
-                text = stringResource(id = R.string.time_bonus) + " $timeBonus",
-                fontSize = 40.sp,
-                color = Color.White
-            )
-            Text(
-                text = stringResource(id = R.string.perfect_bonus) + " $perfectBonus",
-                fontSize = 40.sp,
-                color = Color.White
-            )
-            Text(
-                text = stringResource(id = R.string.total_score) + " $totalScore",
-                fontSize = 40.sp,
-                color = Color.White
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                // Row for round bonus
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.round_bonus),
+                        fontSize = 40.sp,
+                        color = Color.White
+                    )
+                    Text(
+                        text = "$roundBonus",
+                        fontSize = 40.sp,
+                        color = Color.Yellow
+                    )
+                }
+
+                // Row for time bonus
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.time_bonus),
+                        fontSize = 40.sp,
+                        color = Color.White
+                    )
+                    Text(
+                        text = "$timeBonus",
+                        fontSize = 40.sp,
+                        color = Color.Yellow
+                    )
+                }
+
+                // Row for perfect bonus
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.perfect_bonus),
+                        fontSize = 40.sp,
+                        color = Color.White
+                    )
+                    Text(
+                        text = "$perfectBonus",
+                        fontSize = 40.sp,
+                        color = Color.Yellow
+                    )
+                }
+
+                // Row for total score
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.total_score),
+                        fontSize = 40.sp,
+                        color = Color.White
+                    )
+                    Text(
+                        text = "$totalScore",
+                        fontSize = 40.sp,
+                        color = Color.Yellow
+                    )
+                }
+            }
         }
     }
 }
-
 
 
 @Preview(showBackground = true, widthDp = 800, heightDp = 360)
