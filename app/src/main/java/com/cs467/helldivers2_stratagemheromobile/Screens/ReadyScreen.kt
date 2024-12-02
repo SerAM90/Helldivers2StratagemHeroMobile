@@ -1,16 +1,24 @@
 package com.cs467.helldivers2_stratagemheromobile.Screens
 
 import android.media.MediaPlayer
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -46,25 +54,41 @@ fun ReadyScreen(roundNumber: Int, navController: NavController)
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
+        // Background image
+        Image(
+            painter = painterResource(R.drawable.superearthbackground),
+            contentDescription = "Super Earth Logo",
+            modifier = Modifier
+                .fillMaxHeight(0.7f)
+                .fillMaxWidth(),
+            contentScale = ContentScale.FillHeight,
+            colorFilter = ColorFilter.tint(Color.White),
+            alpha = 0.2f
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Text(
                 text = stringResource(id = R.string.get_ready),
-                fontSize = 50.sp
+                fontSize = 50.sp,
+                color = Color.White
             )
 
             Text(
                 text = stringResource(id = R.string.round),
-                fontSize = 40.sp
+                fontSize = 40.sp,
+                color = Color.White
             )
             Text(
                 text = roundNumber.toString(),
-                fontSize = 30.sp
+                fontSize = 30.sp,
+                color = Color.White
             )
         }
     }
