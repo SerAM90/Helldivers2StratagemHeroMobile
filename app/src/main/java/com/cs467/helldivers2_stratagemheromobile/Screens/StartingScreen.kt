@@ -67,7 +67,7 @@ fun StartingScreen(
                 .fillMaxWidth(),
             contentScale = ContentScale.FillHeight,
             colorFilter = ColorFilter.tint(Color.White),
-            alpha = 0.2f
+            alpha = 0.15f
         )
 
         // Title and Instructions
