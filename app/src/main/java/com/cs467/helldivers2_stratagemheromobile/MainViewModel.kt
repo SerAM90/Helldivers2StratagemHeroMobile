@@ -118,6 +118,7 @@ class MainViewModel(): ViewModel() {
 
     fun gameOverRoundReset(){
         round = 1
+        correctCount = 0
     }
 
     fun roundBonusScore(): Int {
