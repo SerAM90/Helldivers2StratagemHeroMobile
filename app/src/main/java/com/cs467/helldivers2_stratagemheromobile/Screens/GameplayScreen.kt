@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +30,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -71,53 +75,80 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
             //Log.d("PerfectRound", "At the end of round ${mainViewModel.round}, perfectRound = ${mainViewModel.perfectRound}")
         }
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
+    Box(
+        modifier = Modifier.fillMaxSize()
             .background(Color(33, 33, 33)),
-        verticalArrangement = Arrangement.Center
+        contentAlignment = Alignment.Center
     ) {
-        Row {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(0.20f)
-                    .padding(horizontal = 10.dp),
-                horizontalAlignment = Alignment.End
-            ) {
-                Column {
-                    Text(text = stringResource(id = R.string.round), color = Color.White)
-                    Text(text = "${mainViewModel.round}", color = Color.Yellow, fontSize = 30.sp)
-                }
-            }
-
-            StratagemDisplay(mainViewModel = mainViewModel, currentTimeRemaining = currentTimeRemaining,
-                onTimeUpdate = { remainingTime -> currentTimeRemaining = remainingTime }, navController)
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(0.80f)
-                    .padding(horizontal = 10.dp),
-                horizontalAlignment = Alignment.End
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
+        // Background image
+        Image(
+            painter = painterResource(R.drawable.superearthbackground),
+            contentDescription = "Super Earth Logo",
+            modifier = Modifier
+                .fillMaxHeight(0.7f)
+                .fillMaxWidth(),
+            contentScale = ContentScale.FillHeight,
+            colorFilter = ColorFilter.tint(Color.White),
+            alpha = 0.1f
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center
+        ) {
+            HorizontalDivider(
+                modifier = Modifier.paddingFromBaseline(0.dp, 40.dp),
+                color = Color.White,
+                thickness = 2.dp
+            )
+            Row {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(0.20f)
+                        .padding(horizontal = 10.dp),
+                    horizontalAlignment = Alignment.End
                 ) {
-                    // value for score is white
+                    Column {
+                        Text(text = stringResource(id = R.string.round), color = Color.White)
+                        Text(text = "${mainViewModel.round}", color = Color.Yellow, fontSize = 30.sp)
+                    }
+                }
+
+                StratagemDisplay(mainViewModel = mainViewModel, currentTimeRemaining = currentTimeRemaining,
+                    onTimeUpdate = { remainingTime -> currentTimeRemaining = remainingTime }, navController)
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(0.80f)
+                        .padding(horizontal = 10.dp),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // value for score is white
+                        Text(
+                            text = "${mainViewModel.score}",
+                            color = Color.Yellow,
+                            fontSize = 30.sp
+                        )
+                    }
+                    // word score is yellow
                     Text(
-                        text = "${mainViewModel.score}",
-                        color = Color.Yellow,
-                        fontSize = 30.sp
+                        text = stringResource(id = R.string.score),
+                        color = Color.White,
+                        fontSize = 15.sp
                     )
                 }
-                // word score is yellow
-                Text(
-                    text = stringResource(id = R.string.score),
-                    color = Color.White,
-                    fontSize = 15.sp
-                )
             }
+            HorizontalDivider(
+                modifier = Modifier.paddingFromBaseline(60.dp, 0.dp),
+                color = Color.White,
+                thickness = 2.dp
+            )
         }
     }
+
 }
 
 /**
@@ -139,7 +170,6 @@ fun StratagemDisplay(mainViewModel: MainViewModel, currentTimeRemaining: Long, o
             mainViewModel.wrongInput = false
         }
     }
-
     Column(
         modifier = Modifier.fillMaxWidth(0.75f),
         horizontalAlignment = Alignment.Start

@@ -68,7 +68,7 @@ fun ReadyScreen(roundNumber: Int, navController: NavController)
                 .fillMaxWidth(),
             contentScale = ContentScale.FillHeight,
             colorFilter = ColorFilter.tint(Color.White),
-            alpha = 0.2f
+            alpha = 0.15f
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
