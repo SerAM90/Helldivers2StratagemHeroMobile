@@ -95,7 +95,7 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
 
             Column(
                 modifier = Modifier
-                    .fillMaxWidth(0.50f)
+                    .fillMaxWidth(0.80f)
                     .padding(horizontal = 10.dp),
                 horizontalAlignment = Alignment.End
             ) {
