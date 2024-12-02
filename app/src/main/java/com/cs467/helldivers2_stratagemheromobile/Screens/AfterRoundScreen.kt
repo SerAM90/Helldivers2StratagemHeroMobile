@@ -61,7 +61,7 @@ fun AfterRoundScreen(
             it.reset()
             it.release() // Release the MediaPlayer when the sound is done
         }
-        delay(2000) //default is 2000, 5000 for testing- SLOW TIME BETWEEN TRANSITION FOR MATH CHECK******************
+        delay(4000) //default is 2000, 5000 for testing- SLOW TIME BETWEEN TRANSITION FOR MATH CHECK******************
         mainViewModel.goToNextRound() //goes to the next round for continued play- increases the round, and stratagems displayed per pickStratagems() function
         navController.navigate("ready_screen") {
             popUpTo("after_round_screen") { inclusive = true }
