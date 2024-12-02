@@ -90,7 +90,6 @@ fun AfterRoundScreen(
             modifier = Modifier
                 .padding(32.dp) // Adds spacing between the box and the screen edges
                 .fillMaxWidth()
-                .background(Color.Black.copy(alpha = 0.6f), shape = RoundedCornerShape(16.dp))
                 .padding(16.dp) // Padding inside the box
         ) {
             Column(
@@ -104,12 +103,12 @@ fun AfterRoundScreen(
                 ) {
                     Text(
                         text = stringResource(id = R.string.round_bonus),
-                        fontSize = 40.sp,
+                        fontSize = 30.sp,
                         color = Color.White
                     )
                     Text(
                         text = "$roundBonus",
-                        fontSize = 40.sp,
+                        fontSize = 30.sp,
                         color = Color.Yellow
                     )
                 }
@@ -121,12 +120,12 @@ fun AfterRoundScreen(
                 ) {
                     Text(
                         text = stringResource(id = R.string.time_bonus),
-                        fontSize = 40.sp,
+                        fontSize = 30.sp,
                         color = Color.White
                     )
                     Text(
                         text = "$timeBonus",
-                        fontSize = 40.sp,
+                        fontSize = 30.sp,
                         color = Color.Yellow
                     )
                 }
@@ -138,12 +137,12 @@ fun AfterRoundScreen(
                 ) {
                     Text(
                         text = stringResource(id = R.string.perfect_bonus),
-                        fontSize = 40.sp,
+                        fontSize = 30.sp,
                         color = Color.White
                     )
                     Text(
                         text = "$perfectBonus",
-                        fontSize = 40.sp,
+                        fontSize = 30.sp,
                         color = Color.Yellow
                     )
                 }
@@ -155,12 +154,12 @@ fun AfterRoundScreen(
                 ) {
                     Text(
                         text = stringResource(id = R.string.total_score),
-                        fontSize = 40.sp,
+                        fontSize = 30.sp,
                         color = Color.White
                     )
                     Text(
                         text = "$totalScore",
-                        fontSize = 40.sp,
+                        fontSize = 30.sp,
                         color = Color.Yellow
                     )
                 }
