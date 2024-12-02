@@ -32,9 +32,9 @@ abstract class HighScoreDatabase : RoomDatabase(){
                                 // Get the DAO
                                 val dao = getDatabase(context).hsDao()
                                 // Insert sample data
-                                dao.insertScore(HighScoreEntity(playerName = "1. Sam", playerScore = 500))
-                                dao.insertScore(HighScoreEntity(playerName = "2. Bob", playerScore = 42))
-                                dao.insertScore(HighScoreEntity(playerName = "3. Monk", playerScore = 8989))
+                                dao.insertScore(HighScoreEntity(playerName = "Sam", playerScore = 500))
+                                dao.insertScore(HighScoreEntity(playerName = "Bob", playerScore = 42))
+                                dao.insertScore(HighScoreEntity(playerName = "Monk", playerScore = 8989))
                             }
                         }
                     })

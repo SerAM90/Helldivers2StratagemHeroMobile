@@ -24,6 +24,9 @@ interface HighScoreDao {
     @Query("SELECT * FROM $HS_TABLE WHERE scoreId LIKE :id")
     fun getScore(id : Int) : HighScoreEntity
 
+    @Query("SELECT player_score FROM $HS_TABLE ORDER BY player_score DESC LIMIT 1 OFFSET 2")
+    fun getLowestHS(): Int
+
     //@Query("INSERT INTO $HS_TABLE (player_name, player_score) VALUES ('Jonny', 5)")
     //fun insertExample() : HighScoreEntity
 }

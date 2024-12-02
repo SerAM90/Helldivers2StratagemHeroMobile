@@ -138,7 +138,7 @@ class MainActivity : ComponentActivity() {
                 if(gameInitiated && !startAgain){
                     playTransition(R.raw.sound_gameover)
                     //No name input popup if no score
-                    if(viewModel.score > 0) {
+                    if(viewModel.score > highScoreDao.getLowestHS()) {
                         val rootView: View = findViewById(android.R.id.content)
                         showEnterNameSnackbar(rootView)
                     }
@@ -302,7 +302,7 @@ class MainActivity : ComponentActivity() {
         editText.hint = "Enter your name here"
 
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Add Your Score")
+            .setTitle("ADD NEW HIGH SCORE")
             .setMessage("Please enter your name to save your high score:")
             .setView(editText)
             //.setCancelable(false)
@@ -311,7 +311,7 @@ class MainActivity : ComponentActivity() {
                 if (name.isNotBlank()) {
                     saveNameAndScore(name)
                 } else {
-                    Toast.makeText(this, "Name cannot be empty.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Name cannot be empty!", Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("CANCEL", null)
@@ -328,7 +328,7 @@ class MainActivity : ComponentActivity() {
                 playerScore = viewModel.score
             )
         )
-        Toast.makeText(this, "$name's score has been added!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "$name's SCORE HAS BEEN ADDED!", Toast.LENGTH_SHORT).show()
     }
 
     /**
