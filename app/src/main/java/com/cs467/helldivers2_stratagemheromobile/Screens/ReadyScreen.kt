@@ -88,7 +88,7 @@ fun ReadyScreen(roundNumber: Int, navController: NavController)
             Text(
                 text = roundNumber.toString(),
                 fontSize = 30.sp,
-                color = Color.White
+                color = Color.Yellow
             )
         }
     }
