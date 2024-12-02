@@ -3,6 +3,7 @@ package com.cs467.helldivers2_stratagemheromobile.Screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -67,17 +68,23 @@ fun GameOverScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = gameOverDisplay,
+            Text(text = stringResource(id = R.string.game_over),
                 fontSize = 50.sp)
             Text(text = stringResource(id = R.string.high_scores),
                 fontSize = 30.sp)
             for (score in threeTopScores) {
-                Text(text = "${score.playerName} | ${score.playerScore}",
-                    fontSize = 25.sp)
+                Row {
+                    Text(
+                        text = "${score.playerName} | ${score.playerScore}",
+                        fontSize = 25.sp
+                    )
+                }
             }
 
-            Text(text = "${finalScore.playerName} ",
-                fontSize = 25.sp)
+            Text(
+                text = stringResource(id = R.string.your_final_score),
+                fontSize = 25.sp
+            )
             Text(text= "${finalScore.playerScore}",
                 fontSize = 35.sp)
             }
