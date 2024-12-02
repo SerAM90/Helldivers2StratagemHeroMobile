@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -55,14 +56,14 @@ fun StartingScreen(
                     it.reset()
                     it.release() // Release resources when done
                 }
-            },
-        contentAlignment = Alignment.Center
+            }
     ) {
         // Background image
         Image(
             painter = painterResource(R.drawable.superearthbackground),
             contentDescription = "Super Earth Logo",
             modifier = Modifier
+                .padding(top = 75.dp)
                 .fillMaxHeight(0.7f)
                 .fillMaxWidth(),
             contentScale = ContentScale.FillHeight,
@@ -70,23 +71,54 @@ fun StartingScreen(
             alpha = 0.15f
         )
 
-        // Title and Instructions
+        // Foreground content
         Column(
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.SpaceBetween // Distribute items with space in between
         ) {
-            Text(
-                text = stringResource(R.string.title_start_screen),
-                fontSize = 50.sp,
-                color = Color.White
+            // Spacer to create space between the top edge and the top line
+            Spacer(modifier = Modifier.height(48.dp))
+
+            // Top line
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(2.dp)
+                    .background(Color.White)
             )
-            Spacer(modifier = Modifier.height(16.dp)) // Space between texts
-            Text(
-                text = stringResource(R.string.start_screen_instructions),
-                fontSize = 30.sp,
-                color = Color.Yellow
+
+            // Centered content between the lines
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f) // Ensure dynamic space distribution
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.title_start_screen),
+                    fontSize = 50.sp,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.height(16.dp)) // Space between title and instructions
+                Text(
+                    text = stringResource(R.string.start_screen_instructions),
+                    fontSize = 30.sp,
+                    color = Color.Yellow
+                )
+            }
+
+            // Bottom line
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(2.dp)
+                    .background(Color.White)
             )
+
+            // Spacer to create space between the bottom line and the bottom edge of the screen
+            Spacer(modifier = Modifier.height(48.dp))
         }
     }
 }

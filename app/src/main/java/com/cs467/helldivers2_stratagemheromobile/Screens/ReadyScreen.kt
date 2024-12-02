@@ -6,9 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,7 +23,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -37,8 +42,8 @@ import kotlinx.coroutines.delay
         /**
          * The function below is for the ReadyScreen. This screen is displayed before each round. The screen shows the 'GET READY', and current round that the user is about to start.
          */
-fun ReadyScreen(roundNumber: Int, navController: NavController)
-{
+
+fun ReadyScreen(roundNumber: Int, navController: NavController) {
     val context = LocalContext.current
     // This creates a 2s delay from the ready screen to the gameplay screen
     LaunchedEffect(true) {
@@ -64,35 +69,72 @@ fun ReadyScreen(roundNumber: Int, navController: NavController)
             painter = painterResource(R.drawable.superearthbackground),
             contentDescription = "Super Earth Logo",
             modifier = Modifier
-                .fillMaxHeight(0.7f)
+                .padding(top = 3.dp)
+                .fillMaxHeight(0.6f)
                 .fillMaxWidth(),
             contentScale = ContentScale.FillHeight,
             colorFilter = ColorFilter.tint(Color.White),
             alpha = 0.15f
         )
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = stringResource(id = R.string.get_ready),
-                fontSize = 50.sp,
-                color = Color.White
-            )
 
-            Text(
-                text = stringResource(id = R.string.round),
-                fontSize = 40.sp,
-                color = Color.White
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween // Space content between top and bottom
+        ) {
+            // Top line
+            Spacer(modifier = Modifier.height(22.dp)) // Space between top of the screen and the line
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(2.dp)
+                    .background(Color.White)
             )
-            Text(
-                text = roundNumber.toString(),
-                fontSize = 30.sp,
-                color = Color.Yellow
+            Spacer(modifier = Modifier.height(16.dp)) // Space between top line and text
+
+            // Centered content between the lines
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.get_ready),
+                    fontSize = 50.sp,
+                    color = Color.White,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(16.dp)) // Space between lines of text
+                Text(
+                    text = stringResource(id = R.string.round),
+                    fontSize = 40.sp,
+                    color = Color.White,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = roundNumber.toString(),
+                    fontSize = 30.sp,
+                    color = Color.Yellow,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            // Bottom line
+            //Spacer(modifier = Modifier.height(16.dp)) // Space between text and bottom line
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(2.dp)
+                    .background(Color.White)
             )
+            Spacer(modifier = Modifier.height(22.dp)) // Space between bottom line and bottom of the screen
         }
     }
 }
+
+
 
 @Preview(showBackground = true, widthDp = 800, heightDp = 360)
 @Composable

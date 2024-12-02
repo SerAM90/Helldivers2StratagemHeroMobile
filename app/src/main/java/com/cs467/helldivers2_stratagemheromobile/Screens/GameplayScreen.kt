@@ -85,7 +85,7 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
             painter = painterResource(R.drawable.superearthbackground),
             contentDescription = "Super Earth Logo",
             modifier = Modifier
-                .fillMaxHeight(0.7f)
+                .fillMaxHeight(0.6f)
                 .fillMaxWidth(),
             contentScale = ContentScale.FillHeight,
             colorFilter = ColorFilter.tint(Color.White),
