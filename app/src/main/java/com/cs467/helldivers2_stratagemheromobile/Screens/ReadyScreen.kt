@@ -55,7 +55,7 @@ fun ReadyScreen(roundNumber: Int, navController: NavController) {
             it.release() // Release the MediaPlayer when the sound is done
         }
         delay(2000)
-        navController.navigate("gameplay_screen")
+        navController.navigate("gameplay_screen") //nav is on a delay
     }
 
     Box(
@@ -89,13 +89,13 @@ fun ReadyScreen(roundNumber: Int, navController: NavController) {
                     .height(2.dp)
                     .background(Color.White)
             )
-            Spacer(modifier = Modifier.height(16.dp)) // Space between top line and text
+            Spacer(modifier = Modifier.height(31.2.dp)) // Space between top line and text
 
             // Centered content between the lines
-            Column(
+            Column( //column that contains all the text/values
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 11.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -122,14 +122,14 @@ fun ReadyScreen(roundNumber: Int, navController: NavController) {
             }
 
             // Bottom line
-            //Spacer(modifier = Modifier.height(16.dp)) // Space between text and bottom line
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(2.dp)
                     .background(Color.White)
             )
-            Spacer(modifier = Modifier.height(22.dp)) // Space between bottom line and bottom of the screen
+            Spacer(modifier = Modifier.height(31.2.dp)) // Space between bottom line and bottom of the screen
         }
     }
 }

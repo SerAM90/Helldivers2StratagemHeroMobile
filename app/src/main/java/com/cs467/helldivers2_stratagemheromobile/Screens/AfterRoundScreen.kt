@@ -95,27 +95,28 @@ fun AfterRoundScreen(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween // Space elements between top and bottom
         ) {
-            // Top line
-            Spacer(modifier = Modifier.height(48.dp))
-
+            // Top white line
+            Spacer(modifier = Modifier.height(43.1.dp))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(5.dp)
+                    .height(2.dp)
                     .background(Color.White)
             )
 
             // Centered content between the lines
             Column(
                 modifier = Modifier
-                    .weight(1f) // Dynamic space allocation
-                    .padding(horizontal = 16.dp),
+                    .weight(1f) // space allocation
+                    .padding(horizontal = 32.dp), // Increased padding from screen edges
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 // Score information
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 75.dp), // Padding for label and value
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -123,6 +124,7 @@ fun AfterRoundScreen(
                         fontSize = 30.sp,
                         color = Color.White
                     )
+                    // Apply same padding for the score value
                     Text(
                         text = "$roundBonus",
                         fontSize = 30.sp,
@@ -130,8 +132,10 @@ fun AfterRoundScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
+                Row( //row for time bonus
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 75.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -146,8 +150,10 @@ fun AfterRoundScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
+                Row( //row for perfect bonus
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 75.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -162,8 +168,10 @@ fun AfterRoundScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
+                Row( //row for total score
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 75.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -179,18 +187,18 @@ fun AfterRoundScreen(
                 }
             }
 
-            // Bottom line
+            // Bottom white line
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(3.dp)
+                    .height(2.dp)
                     .background(Color.White)
             )
-            Spacer(modifier = Modifier.height(48.dp))
-
+            Spacer(modifier = Modifier.height(50.dp)) // Spacer to add bottom margin
         }
     }
 }
+
 
 @Preview(showBackground = true, widthDp = 800, heightDp = 360)
 @Composable

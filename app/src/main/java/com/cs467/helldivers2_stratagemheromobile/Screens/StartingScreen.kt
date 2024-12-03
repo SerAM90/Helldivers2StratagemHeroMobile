@@ -41,7 +41,7 @@ fun StartingScreen(
 ) {
     val context = LocalContext.current
 
-    // Top-level container
+    // Top-level container - all contained within the box
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -74,12 +74,12 @@ fun StartingScreen(
         // Foreground content
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween // Distribute items with space in between
+            verticalArrangement = Arrangement.SpaceBetween //Space between lines and edges
         ) {
             // Spacer to create space between the top edge and the top line
             Spacer(modifier = Modifier.height(48.dp))
 
-            // Top line
+            // Top white line
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -87,11 +87,11 @@ fun StartingScreen(
                     .background(Color.White)
             )
 
-            // Centered content between the lines
-            Column(
+            // Center the content between the lines
+            Column( //column for all the text and values on the screen
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f) // Ensure dynamic space distribution
+                    .weight(1f) // weight for dynamic spacing
                     .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -101,7 +101,7 @@ fun StartingScreen(
                     fontSize = 50.sp,
                     color = Color.White
                 )
-                Spacer(modifier = Modifier.height(16.dp)) // Space between title and instructions
+                Spacer(modifier = Modifier.height(16.dp)) // Spacer for the title and instructions
                 Text(
                     text = stringResource(R.string.start_screen_instructions),
                     fontSize = 30.sp,
@@ -109,7 +109,7 @@ fun StartingScreen(
                 )
             }
 
-            // Bottom line
+            // Bottom white line
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

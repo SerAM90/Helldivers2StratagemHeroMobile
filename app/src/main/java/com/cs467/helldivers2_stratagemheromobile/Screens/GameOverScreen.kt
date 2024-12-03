@@ -93,8 +93,8 @@ fun GameOverScreen(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                // Top line with space
-                Spacer(modifier = Modifier.height(18.dp))
+                // Top white line with space
+                Spacer(modifier = Modifier.height(29.8.dp))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -104,7 +104,7 @@ fun GameOverScreen(
                 //Spacer(modifier = Modifier.height(3.dp))
 
                 // Center content
-                Column(
+                Column( //column that contains all the text and values
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 2.dp),
@@ -117,14 +117,14 @@ fun GameOverScreen(
                         fontSize = 50.sp,
                         textAlign = TextAlign.Center
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(3.dp)) //spacer to space text, and make room in the box
                     Text(
                         text = stringResource(id = R.string.high_scores),
                         color = Color.White,
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    //Spacer(modifier = Modifier.height(16.dp))
                     for ((index, score) in threeTopScores.withIndex()) {
                         Text(
                             text = "${index + 1}. ${score.playerName} | ${score.playerScore}",
@@ -133,7 +133,7 @@ fun GameOverScreen(
                             textAlign = TextAlign.Center
                         )
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = stringResource(id = R.string.your_final_score),
                         color = Color.White,
@@ -156,7 +156,7 @@ fun GameOverScreen(
                         .height(2.dp)
                         .background(Color.White)
                 )
-                Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(29.8.dp)) //spacer to space between the bottom white line and edge of the screen
             }
         }
     }
