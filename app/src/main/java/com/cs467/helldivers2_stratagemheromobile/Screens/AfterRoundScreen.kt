@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -53,23 +55,25 @@ fun AfterRoundScreen(
     mainViewModel: MainViewModel
 ) {
     val context = LocalContext.current
-    // Trigger navigation to the GameplayScreen after 2 seconds
+
+    // Trigger navigation to the GameplayScreen after a delay
     LaunchedEffect(true) {
-        val mediaPlayer = MediaPlayer.create(context, R.raw.sound_end_round_triple_score) // Add a sound file in 'res/raw'
+        val mediaPlayer = MediaPlayer.create(context, R.raw.sound_end_round_triple_score)
         mediaPlayer?.start()
         mediaPlayer?.setOnCompletionListener {
             it.reset()
-            it.release() // Release the MediaPlayer when the sound is done
+            it.release() // Release resources after sound completes
         }
-        delay(4000) //default is 2000, 5000 for testing- SLOW TIME BETWEEN TRANSITION FOR MATH CHECK******************
-        mainViewModel.goToNextRound() //goes to the next round for continued play- increases the round, and stratagems displayed per pickStratagems() function
+        delay(4000) // Delay to allow sound and transitions
+        mainViewModel.goToNextRound()
         navController.navigate("ready_screen") {
             popUpTo("after_round_screen") { inclusive = true }
         }
     }
 
-    Box( //bg box
-        modifier = modifier.fillMaxSize()
+    Box(
+        modifier = modifier
+            .fillMaxSize()
             .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
@@ -78,6 +82,7 @@ fun AfterRoundScreen(
             painter = painterResource(R.drawable.superearthbackground),
             contentDescription = "Super Earth Logo",
             modifier = Modifier
+                .padding(top = 4.dp) // Add padding to move the image away from the top
                 .fillMaxHeight(0.7f)
                 .fillMaxWidth(),
             contentScale = ContentScale.FillHeight,
@@ -85,20 +90,33 @@ fun AfterRoundScreen(
             alpha = 0.15f
         )
 
-        // Box for score names and values
-        Box(
-            modifier = Modifier
-                .padding(32.dp) // Adds spacing between the box and the screen edges
-                .fillMaxWidth()
-                .padding(16.dp) // Padding inside the box
+        // Foreground content
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween // Space elements between top and bottom
         ) {
+            // Top white line
+            Spacer(modifier = Modifier.height(43.1.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(2.dp)
+                    .background(Color.White)
+            )
+
+            // Centered content between the lines
             Column(
+                modifier = Modifier
+                    .weight(1f) // space allocation
+                    .padding(horizontal = 32.dp), // Increased padding from screen edges
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // Row for round bonus
+                // Score information
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 75.dp), // Padding for label and value
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -106,16 +124,18 @@ fun AfterRoundScreen(
                         fontSize = 30.sp,
                         color = Color.White
                     )
+                    // Apply same padding for the score value
                     Text(
                         text = "$roundBonus",
                         fontSize = 30.sp,
                         color = Color.Yellow
                     )
                 }
-
-                // Row for time bonus
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
+                Spacer(modifier = Modifier.height(8.dp))
+                Row( //row for time bonus
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 75.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -129,10 +149,11 @@ fun AfterRoundScreen(
                         color = Color.Yellow
                     )
                 }
-
-                // Row for perfect bonus
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
+                Spacer(modifier = Modifier.height(8.dp))
+                Row( //row for perfect bonus
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 75.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -146,10 +167,11 @@ fun AfterRoundScreen(
                         color = Color.Yellow
                     )
                 }
-
-                // Row for total score
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
+                Spacer(modifier = Modifier.height(8.dp))
+                Row( //row for total score
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 75.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -164,6 +186,15 @@ fun AfterRoundScreen(
                     )
                 }
             }
+
+            // Bottom white line
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(2.dp)
+                    .background(Color.White)
+            )
+            Spacer(modifier = Modifier.height(50.dp)) // Spacer to add bottom margin
         }
     }
 }

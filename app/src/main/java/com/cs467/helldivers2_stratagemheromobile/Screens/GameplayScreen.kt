@@ -75,7 +75,7 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
             //Log.d("PerfectRound", "At the end of round ${mainViewModel.round}, perfectRound = ${mainViewModel.perfectRound}")
         }
     }
-    Box(
+    Box( //top level container- box for all the content
         modifier = Modifier.fillMaxSize()
             .background(Color(33, 33, 33)),
         contentAlignment = Alignment.Center
@@ -85,7 +85,7 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
             painter = painterResource(R.drawable.superearthbackground),
             contentDescription = "Super Earth Logo",
             modifier = Modifier
-                .fillMaxHeight(0.7f)
+                .fillMaxHeight(0.6f)
                 .fillMaxWidth(),
             contentScale = ContentScale.FillHeight,
             colorFilter = ColorFilter.tint(Color.White),
@@ -115,7 +115,7 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
                 }
 
                 StratagemDisplay(mainViewModel = mainViewModel, currentTimeRemaining = currentTimeRemaining,
-                    onTimeUpdate = { remainingTime -> currentTimeRemaining = remainingTime }, navController)
+                    onTimeUpdate = { remainingTime -> currentTimeRemaining = remainingTime }, navController) //where StratagemDisplay is called
 
                 Column(
                     modifier = Modifier
@@ -141,7 +141,7 @@ fun GameplayScreen(mainViewModel: MainViewModel, navController: NavController) {
                     )
                 }
             }
-            HorizontalDivider(
+            HorizontalDivider( //white line
                 modifier = Modifier.paddingFromBaseline(60.dp, 0.dp),
                 color = Color.White,
                 thickness = 2.dp
